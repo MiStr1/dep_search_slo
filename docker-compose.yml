@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+
+  dep_search:
+    container_name: dep_search
+    build: 
+        context: .
+        dockerfile: Dockerfile_api_gui
+    ports:
+      - "5000:5000"
+    networks:
+      - net
+  
+    #  dep_search_old:
+    #    container_name: dep_search_old
+    #    build: 
+    #        context: .
+    #        dockerfile: Dockerfile_api_old
+    #    ports:
+    #      - "5001:5001"
+    #    networks:
+    #      - net
+  nginx:
+      build: 
+        context: .
+        dockerfile: DockerfileNginx
+      restart: always
+      ports:
+        - "80:80"
+      depends_on:
+        - dep_search
+        #- dep_search_old
+      networks:
+        - net
+
+      
+
+networks:
+  net:
+
