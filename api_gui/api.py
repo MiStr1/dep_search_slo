@@ -274,7 +274,7 @@ def help():
     inf = open('dep-search_query-lang_original.md', 'r')
     md_text = inf.read()
     inf.close()
-    return markdown.markdown(md_text)
+    return "<html><head><style>body\n{\n  padding-left: 40px;\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
 
 
 @app.route('/drevesnik/change_pw', methods=['POST'])
