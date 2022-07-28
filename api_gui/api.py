@@ -433,6 +433,17 @@ def mnf():
     return render_template("qx_hack.html", approot=approot)
 
 
+@app.route('/drevesnik/home/en')
+def mnfen():
+    inf = open('config.json', 'r')
+    xx = json.load(inf)
+    inf.close()
+
+    approot = xx['approot']
+
+    return render_template("qx_hack_en.html", approot=approot)
+
+
 @app.route('/drevesnik/get_dbs_json')
 def gdsb():
     inf = open('dbs.json','rt')
@@ -940,6 +951,59 @@ def get_xtrees(ticket, lang, start, end):
         #    return render_template('query.html', start=0, end=(end-start), lang='unknown', idx=ticket, approot=approot)
   
     return render_template('query.html', start=start, end=end, lang=lang, idx=ticket, approot=approot)
+    
+    
+@app.route("/drevesnik/show/en/<ticket>/<lang>/<start>/<end>")
+def get_xtrees_en(ticket, lang, start, end):
+
+    try:
+        start = int(start)
+        end = int(end)
+    except:
+        start = 0
+        end = 10
+
+    inf = open('config.json', 'r')
+    xx = json.load(inf)
+    inf.close()
+
+    approot = xx['approot']
+
+
+    trees = []
+
+    tc = 0
+    curr_tree = []
+    try:
+        inf = open(res_file(ticket+'.json'), 'r')
+        inf.close()
+    except:
+        time.sleep(0.5)
+
+    if lang == 'undefined':
+        #
+        try:
+            inf = open(res_file(ticket+'.json'), 'r')
+            db = json.load(inf)
+            db = db["dbs"]
+            inf.close()
+        except:
+            return render_template('query.html', start=start, end=end, lang=lang, idx=ticket, approot=approot)
+
+        dbs = get_flat_dbs()
+
+        for dib in db.split(','):
+            inf = open('/api_gui/' + dbs[dib][8:] + '/langs', 'rt')
+            xx = []
+            for ln in inf:
+                xx.append(ln.strip())
+
+            inf.close()
+        return render_template('query.html', start=start, end=end, lang=xx[0], idx=ticket, approot=approot)
+        #except:
+        #    return render_template('query.html', start=0, end=(end-start), lang='unknown', idx=ticket, approot=approot)
+  
+    return render_template('query_en.html', start=start, end=end, lang=lang, idx=ticket, approot=approot)
     
 
 
