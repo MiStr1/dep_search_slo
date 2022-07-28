@@ -1,0 +1,2 @@
+SSJ,SST	_ <nsubj _	sl	100	false	false	false	demo1
+SSJ	X=Np.*	sl	100	false	true	false	demo2
