@@ -40,7 +40,6 @@ with open("xpos_tags.txt", "r") as xpos_tags_file:
     xpos_tags = xpos_tags_file.read().split(" ")
 
 
-
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
@@ -586,6 +585,26 @@ def file_generator(ticket):
             files = list(xx)
         else:
             break
+            
+
+def start_query_for_cache(cached_calls):
+    with open("skip_cache_clean.txt", "w") as cache_file:
+        with open(cached_calls, "r") as call_file:
+            for line in call_file:
+                dbs, query, langs, limit, case, rand, small_sent, ticket = line.strip().split("\t")            
+                rand = rand=='true'
+                
+                case = case=='true'
+
+                query = process_xpos_regex(query)
+                if small_sent == 'true':
+                    query = query.strip() + " & S=small"
+                p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand))
+                p.start()
+                cache_file.write(ticket + "\n")
+
+
+start_query_for_cache("cache_calls.txt")
 
 
 @app.route("/drevesnik/download/<ticket>")
