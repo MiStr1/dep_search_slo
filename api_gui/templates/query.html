@@ -329,29 +329,6 @@ function update_stuff(){
             var xx = key;
 		    hits += parseInt(data[key]);
             console.log(data);
-
-            /*if (!langs.includes(xx)){
-
-                langs.push(xx);
-
-                var button = document.createElement("button");
-                button.setAttribute("id", "lang_btn_" + xx);
-                button.setAttribute("lang", xx);
-                button.setAttribute("onclick", "xmove(this);");
-                button.innerHTML = xx + '(' + data[key] + ')';
-
-                var body = document.getElementById("queryinfo");
-                body.appendChild(button);
-                if (window.location.href.search("undefined") > 0){button.click();}
-            }
-            else {
-            
-            ($('#lang_btn_' + xx).html(xx + '(' + data[key] + ')');
-            
-            }*/
-            //alert(body);
-
-            //Add link
          
         }
 		$('#res_count').html("Število zadetkov: " + hits.toString());

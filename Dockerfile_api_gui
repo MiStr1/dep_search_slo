@@ -1,21 +1,16 @@
 FROM python:3.8-slim-buster
-RUN apt-get update && apt-get install -y git
-RUN apt-get install -y gunicorn
-RUN apt-get install -y build-essential
-RUN apt-get install -y libpcre3 libpcre3-dev
+RUN apt-get update && apt-get install -y git make liblmdb-dev unicorn build-essential libpcre3 libpcre3-dev
 RUN pip install uwsgi pyyaml six
 RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 RUN mkhomedir_helper uwsgi
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-RUN pip install cython
-COPY ubuntu_18.10.needed_packages setup.py .
-RUN cat ubuntu_18.10.needed_packages | xargs apt-get install -y
 
 COPY SSJ api_gui/SSJ
 COPY SST api_gui/SST
 COPY ccKres api_gui/ccKres
 
+COPY setup.py .
 COPY dep_search dep_search
 RUN pip install -e .
 COPY api_gui api_gui

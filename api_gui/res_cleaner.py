@@ -2,7 +2,7 @@ import os
 import glob
 import time
 
-limit = time.time() - 1 # 60*60
+limit = time.time() - 60*60
 
 skip_cleaning = set()
 
@@ -17,9 +17,14 @@ print(skip_cleaning)
 
 for f in glob.glob('./res/*'):
     tmp_f = f[5:]
-    tmp_f = tmp_f[:tmp_f.rfind(".")]
     print(tmp_f)
-    if not tmp_f in skip_cleaning and os.stat(f).st_mtime < limit:
+    skip = False
+    for name in tmp_f[:tmp_f.rfind(".")].split("_"):
+        if name.replace("/","") in skip_cleaning:
+            skip = True
+            break
+    if not skip and os.stat(f).st_mtime < limit:
+        print("cleaned",  tmp_f)
         os.remove(f)
 
 

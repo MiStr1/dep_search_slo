@@ -602,7 +602,8 @@ def start_query_for_cache(cached_calls):
     with open("skip_cache_clean.txt", "w") as cache_file:
         with open(cached_calls, "r") as call_file:
             for line in call_file:
-                dbs, query, langs, limit, case, rand, small_sent, ticket = line.strip().split("\t")            
+                dbs, query, langs, limit, case, rand, small_sent, ticket = line.strip().split("\t")       
+                print("calling", dbs, query, langs, limit, case, rand, small_sent, ticket)
                 rand = rand=='true'
                 
                 case = case=='true'
