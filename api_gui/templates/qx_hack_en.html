@@ -100,7 +100,7 @@ body {
 <h2>Poizvedba</h2>
 <div style="display:inline">
 <div id='query'>
-Iskalni pogoj <a href="{{ approot }}/drevesnik/help">(help)</a>:<br>
+Query <a href="{{ approot }}/drevesnik/help">(help)</a>:<br>
 <input id="qrt" type="textarea" name="vehicle1" value="_ <nsubj _"><br>
 <input type="checkbox" id="xcasex" name="xcasex">Case Insensitive<br>
 <input type="checkbox" id="xsmallx" name="xsmallx">Search for short sentences<br>
@@ -166,7 +166,7 @@ $("#qrt").val(vv);
 $( document ).ready(function() { 
 
     $('#error').hide();
-    $.getJSON(approot + '/drevesnik/get_dbs_json', function(data) {
+    $.getJSON(approot + '/drevesnik/get_dbs_json/en/', function(data) {
 	
 		new_html = ""
 		first = true;

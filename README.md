@@ -26,6 +26,11 @@ Add description for the db in the `api_gui/db_desc.json` if needed:
 "<name_of_db>": "<b><shown_name_of_db></b><br> description of the db"
 ```
 
+To use xpos search you will need to generate xpos tags list for each corpus.
+To do that you will have to first set up dictionary conllu_files in `generate_xpos_tags.py`.
+Each entry in dictionary should be `"<name_of_db>": "<location_of_conllu_file>"`. After the dictionary
+is filled with entries for each db run it to generate `xpos_tags.json` file.
+
 #### Set up cached calls
 
 In each line of `api_gui/cache_calls.txt` there is a call which is executed when this service is started and its results are
@@ -46,6 +51,11 @@ Paremeters:
 
 Each of these queries can then be accesed at http://localhost/drevesnik/show/Ticket/Language/0/10.
 
+#### Set up help page
+
+For Slovene and English there is a help page located on http://localhost/ and http://localhost/en/.
+Help page is generated from a markdown file saved in `dep-search_query-lang_original.md` and `dep-search_query-lang_original_en.md`
+
 
 #### Run the project with docker
 
@@ -55,7 +65,7 @@ Run
 docker-compose up --build
 ```
 
-to build and run this project. Home page of this service can be accesed at http://localhost/drevesnik/home.
+to build and run this project. Home page of this service can be accesed at http://localhost/drevesnik.
 
 
 ## Project structure

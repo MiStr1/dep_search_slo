@@ -36,8 +36,8 @@ import markdown
 
 
 
-with open("xpos_tags.txt", "r") as xpos_tags_file:
-    xpos_tags = xpos_tags_file.read().split(" ")
+with open("xpos_tags.json", "r") as xpos_tags_file:
+    xpos_tags = json.load(xpos_tags_file)
 
 
 app = Flask(__name__)
@@ -57,25 +57,31 @@ def match_xpos_tags(xpos_tag, prev_found_xpos_tags, query):
     return False    
     
 
-def get_all_xpos_roots(xpos_query):   
-    global xpos_tags
+def get_all_xpos_roots(xpos_query, xpos_tags_from_db): 
     xpos_query = xpos_query.replace(".", "[A-Za-z]")
     print("query:", xpos_query)
     query = compile(xpos_query)
     prev_found_xpos_tags = set()
-    found_xpos_tags = filter(partial(match_xpos_tags, prev_found_xpos_tags=prev_found_xpos_tags, query=query), xpos_tags)
+    found_xpos_tags = filter(partial(match_xpos_tags, prev_found_xpos_tags=prev_found_xpos_tags, query=query), xpos_tags_from_db)
     queries = ["X=" + tag[:-1] for tag in found_xpos_tags]
     if len(queries) > 1:
         return "( " + " | ".join(queries)  + " ) "
     return " | ".join(queries)
 
 
-def process_xpos_regex(query):
+def process_xpos_regex(query, dbs):
+    global xpos_tags
+    xpos_tags_from_db = []
+    for db in dbs.strip().split(","):
+        if db in xpos_tags:
+            xpos_tags_from_db += xpos_tags[db]
+    
+    xpos_tags_from_db = list(set(xpos_tags_from_db))
     iter = finditer(r"X=[\s\S]*?[ \|\&]", query + " ")
     cur_position = 0
     processed_string = ""
     for xpos_query_start, xpos_query_end in [(m.start(0), m.end(0)) for m in iter]:
-        processed_string += query[cur_position:xpos_query_start] + get_all_xpos_roots(query[xpos_query_start+2:xpos_query_end-1] + ">")
+        processed_string += query[cur_position:xpos_query_start] + get_all_xpos_roots(query[xpos_query_start+2:xpos_query_end-1] + ">", xpos_tags_from_db)
         cur_position = xpos_query_end - 1
     processed_string += query[cur_position:]
     return processed_string
@@ -94,7 +100,7 @@ def query_process(dbs, query, langs, ticket, limit=10000, case=False, rand=False
 
     print ('!!!', str(langs))
     print(dbs, "|", query, "|", langs, "|", ticket)
-    query = process_xpos_regex(query)
+    query = process_xpos_regex(query, dbs)
     print("xpos processed query", query)
     limit = int(limit)
     try:
@@ -276,6 +282,14 @@ def help():
     return "<html><head><style>body\n{\n  padding-left: 40px;\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
 
 
+@app.route('/drevesnik/help/en/')
+def help_en():
+    inf = open('dep-search_query-lang_original_en.md', 'r')
+    md_text = inf.read()
+    inf.close()
+    return "<html><head><style>body\n{\n  padding-left: 40px;\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
+
+
 @app.route('/drevesnik/change_pw', methods=['POST'])
 def cshange_pw():
 
@@ -422,7 +436,7 @@ def send_js(path):
     print (path)
     return send_from_directory('static', path)
 
-@app.route('/drevesnik/home')
+@app.route('/drevesnik/')
 def mnf():
     inf = open('config.json', 'r')
     xx = json.load(inf)
@@ -433,7 +447,7 @@ def mnf():
     return render_template("qx_hack.html", approot=approot)
 
 
-@app.route('/drevesnik/home/en')
+@app.route('/drevesnik/en/')
 def mnfen():
     inf = open('config.json', 'r')
     xx = json.load(inf)
@@ -450,6 +464,18 @@ def gdsb():
     dbs = json.load(inf)
     inf.close()
     inf = open("db_desc.json", 'rt')
+    dbs_desc = json.load(inf)
+    inf.close()
+    return jsonify(get_node_with_kids(dbs, dbs_desc, '')) 
+    
+
+
+@app.route('/drevesnik/get_dbs_json/en/')
+def gdsb_en():
+    inf = open('dbs.json','rt')
+    dbs = json.load(inf)
+    inf.close()
+    inf = open("db_desc_en.json", 'rt')
     dbs_desc = json.load(inf)
     inf.close()
     return jsonify(get_node_with_kids(dbs, dbs_desc, '')) 
@@ -554,9 +580,6 @@ def get_db_langs(dbs):
     return xx
 
 
-
-
-
 def file_generator_lang(ticket, lang):
 
     step = 10
@@ -608,7 +631,6 @@ def start_query_for_cache(cached_calls):
                 
                 case = case=='true'
 
-                query = process_xpos_regex(query)
                 if small_sent == 'true':
                     query = query.strip() + " & S=small"
                 p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand))
@@ -714,7 +736,6 @@ def hello_qc(dbs, query, limit, case):
     case = case=='true'
     rand = rand=='true'
     ticket = unique_id()
-    query = process_xpos_regex(query)
     p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand))
     p.start()
     return ticket
@@ -726,7 +747,6 @@ def hello_qcc(dbs, query, langs, limit, case):
     rand = rand=='true'
 
     ticket = unique_id()
-    query = process_xpos_regex(query)
     p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand))
     p.start()
     return ticket
@@ -753,8 +773,8 @@ def start_post():
     print(dbs, "|", query, "|", langs, "|", limit, "|", case)
 
     ticket = unique_id()
-    print (dbs,query, langs, ticket, limit, case)    
-    query = process_xpos_regex(query)
+    print (dbs,query, langs, ticket, limit, case)   
+    
     if small_sent == 'true':
         query = query.strip() + " & S=small"
     p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand))
