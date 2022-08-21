@@ -86,6 +86,9 @@ button:hover {
   background-color: #4CAF50; /* Green */
   color: white;
 }
+img {
+	height: 100px;
+}
 
 </style>
 
@@ -156,9 +159,6 @@ button:hover {
 <div id="queryjs">
 </div>
 
-<div id="qff">
-</div>
-
 <div id="queryjs2">
 </div>
 
@@ -179,7 +179,7 @@ button:hover {
 
     <input id="pgnum" type="text" name="FirstName" style="display: inline-block; white-space: nowrap; width: 50px"> / <div id="pages" style="display: inline-block; white-space: nowrap;">120</div>
 
-    <button id="gobtn" type="button">Ok</button>   <button id="bbtn" type="button"><</button>   <button id="fwbtn" type="button">></button>
+    <button id="gobtn" type="button">OK</button>   <button id="bbtn" type="button"><</button>   <button id="fwbtn" type="button">></button>
 
 
 </div>
@@ -193,7 +193,7 @@ button:hover {
     <tr>
     <td style="padding:25px;"><a href="{{ approot }}/drevesnik/download/{{ idx }}">Download results CONLLU</a><br>
 	<a href="{{ approot }}/drevesnik/kwic_download/{{ idx }}">Download results kwic</a><br>
-	<a href="{{ approot }}/drevesnik/json_freqs/{{ idx }}">Download frequencies</a></td>
+	<a href="{{ approot }}/drevesnik/freqs/en/{{ idx }}">Show statistics</a></td>
 	</tr>
 </div>
 </div>
@@ -252,8 +252,8 @@ function updatetrees(idx, start, end, lang){
         if (xdata.length > 200) {xdata = xdata.substr(0,200) + '...'}
         var text = "";//document.createTextNode(xdata);
         //alert(xdata);
-        $('#queryjs').html("");
-        $('#queryjs').append(text);
+        //$('#queryjs').html("");
+        //$('#queryjs').append(text);
     }); 
 
 
@@ -272,7 +272,7 @@ function loadtrees(idx, start, end, lang){
 
     //$.get("/get_trees/2016642315595390675/b'pl'/1/25", function(data, status){
 
-    $.get("{{ approot }}/drevesnik/get_trees/" + idx + "/" + lang + "/" + start + "/" + end, function(data, status){
+    $.get("{{ approot }}/drevesnik/get_trees/" + "1/" + idx + "/" + lang + "/" + start + "/" + end, function(data, status){
        $('#query_result').html(data);
        console.log("load_trees!");
        console.log(data);
@@ -367,18 +367,6 @@ function update_stuff(){
            $('#lang_btn_' + key).html(key + '(' + value + ')');
        }
     }); */
-
-
-
-    $.get("{{ approot }}/drevesnik/is_query_finished/" + idx, function(xdata, status){
-        if (xdata){
-        done = true;
-		
-        $('#qff').html("");
-		$('#qff').append("Query has finished!");
-        }
-
-    }); 
 
     }
 
@@ -493,16 +481,6 @@ $( document ).ready(function() {
 		$('#queryjs2').append(document.createTextNode(queryString));
     }); 
 
-    $.get("{{ approot }}/drevesnik/is_query_finished/" + idx, function(xdata, status){
-        console.log(xdata);
-        var infoxx = "Query is still running ...";
-        if (xdata){
-            infoxx = "Query has finished!";
-        }
-        //alert(xdata);
-        $('#qff').html("");
-		$('#qff').append(infoxx);
-    }); 
     $.get("{{ approot }}/drevesnik/get_err/" + idx, function(xdata, status){
         console.log(xdata);
         var text = document.createTextNode(xdata);

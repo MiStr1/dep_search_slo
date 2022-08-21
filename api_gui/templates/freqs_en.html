@@ -9,9 +9,9 @@
 </head>
 <body>
 
-<a href={{xurl}}>Prenesi json </a>
+<a href={{xurl}}>Download json </a>
 <br><br>
-<h2>Statistika</h2>
+<h2>Stats</h2>
 <div style="border: 1px outset black;width: 500px;">
 {% for k, v in ret[0].items() %}
     {{ k }} : {{ v }} <br>
@@ -25,10 +25,10 @@
         <h2>{{ xx }}</h2>
 <div style="border: 1px outset black;width: 500px;">
 
-        {{ xx }}_število : {{ ret[1][ xx + "_število"] }}<br><br>
-        {% if ret[1][xx + "_najbolj_pogosto"]|length > 0 %}
+        {{ xx }}_count : {{ ret[1][ xx + "_count"] }}<br><br>
+        {% if ret[1][xx + "_most_common"]|length > 0 %}
             <h3>Top 10</h3>
-                {% for k, v in ret[1][xx + "_najbolj_pogosto"] %}
+                {% for k, v in ret[1][xx + "_most_common"] %}
                     {{ k }} : {{ v }} <br>
                 {% endfor %}
         {% endif %}

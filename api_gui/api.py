@@ -1,29 +1,19 @@
-from flask import stream_with_context, Response
+from flask import stream_with_context, Response, Flask, jsonify,\
+                Markup, request, render_template, send_from_directory,\
+                make_response, redirect, escape
 import json
-from flask import Flask, jsonify, Markup
-import os
 import time
-from flask import render_template, send_from_directory, make_response, redirect
-from flask import Flask, Markup
-import flask
 import json
 from multiprocessing import Process
 import subprocess
 import argparse
-from flask import Response
 import io
 import sys
 import glob
-from flask import jsonify
-import os.path
-import os
 from kwic import kwic_gen
 from freqs import get_freqs 
-import time
 import os
 from collections import defaultdict
-from os import path
-from flask import Flask, request
 import hashlib
 from werkzeug.utils import secure_filename#, escape
 import uuid
@@ -33,7 +23,26 @@ from re import finditer, compile
 from copy import deepcopy
 from functools import partial
 import markdown
+import threading
 
+
+main_page_called = 0
+timer = time.time()
+lock = threading.Lock()
+
+
+def update_main_page_called_file(main_page_called):
+    if os.path.exists("main_page_called/main_page_called.txt"):
+        with open("main_page_called/main_page_called.txt", "r") as file:
+            try:
+                saved_number_of_calls = int(file.read().strip())
+            except:
+                saved_number_of_calls = 0
+    else:
+        saved_number_of_calls = 0
+    with open("main_page_called/main_page_called.txt", "w") as file:
+        file.write(str(saved_number_of_calls + main_page_called))
+    return main_page_called
 
 
 with open("xpos_tags.json", "r") as xpos_tags_file:
@@ -45,7 +54,6 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 RES_DIR = os.path.join(THIS_DIR, "res")
-
 
 def match_xpos_tags(xpos_tag, prev_found_xpos_tags, query):
     if xpos_tag[:-1] in prev_found_xpos_tags:
@@ -279,7 +287,7 @@ def help():
     inf = open('dep-search_query-lang_original.md', 'r')
     md_text = inf.read()
     inf.close()
-    return "<html><head><style>body\n{\n  padding-left: 40px;\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
+    return "<html><head><style>body\n{\n  padding-left: 40px; font-family: 'Open Sans'; font-size: 14px;}\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
 
 
 @app.route('/drevesnik/help/en/')
@@ -287,7 +295,7 @@ def help_en():
     inf = open('dep-search_query-lang_original_en.md', 'r')
     md_text = inf.read()
     inf.close()
-    return "<html><head><style>body\n{\n  padding-left: 40px;\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
+    return "<html><head><style>body\n{\n  padding-left: 40px; font-family: 'Open Sans'; font-size: 14px;}\n}\n></style><body>" + markdown.markdown(md_text)  + "</head></body></html>"
 
 
 @app.route('/drevesnik/change_pw', methods=['POST'])
@@ -431,13 +439,25 @@ def xxquery_process(dbs, query, m, langs):
 def unique_id():
     return str(hash(time.time()))
 
+
 @app.route('/drevesnik/static/<path:path>')
 def send_js(path):
     print (path)
     return send_from_directory('static', path)
 
+
 @app.route('/drevesnik/')
 def mnf():
+    global main_page_called
+    global timer
+    lock.acquire()
+    main_page_called += 1
+    if time.time() - timer > 20 and main_page_called != 0:
+        timer = time.time()
+        curr_main_page_called = main_page_called
+        main_page_called -= curr_main_page_called
+        update_main_page_called_file(curr_main_page_called)
+    lock.release()
     inf = open('config.json', 'r')
     xx = json.load(inf)
     inf.close()
@@ -449,6 +469,16 @@ def mnf():
 
 @app.route('/drevesnik/en/')
 def mnfen():
+    global main_page_called
+    global timer
+    lock.acquire()
+    main_page_called += 1
+    if time.time() - timer > 20 and main_page_called != 0:
+        timer = time.time()
+        curr_main_page_called = main_page_called
+        main_page_called -= curr_main_page_called
+        update_main_page_called_file(curr_main_page_called)
+    lock.release()
     inf = open('config.json', 'r')
     xx = json.load(inf)
     inf.close()
@@ -692,9 +722,18 @@ def kdll(ticket, lang):
 @app.route("/drevesnik/freqs/<ticket>")
 def ffr(ticket):
 
+    ret = get_freqs(res_file('*_' + ticket + '*.conllu'), eng=False)
+    relx = ["odvisne_besede", "odvisne_leme", "leve_besede", "leve_leme", "desne_besede", "desne_leme", "starševske_besede", "starševske_leme", "odvistnostni_tipi_kot_otrok", "odvistnostni_tipi_kot_starš", "najdene_besede", "najdene_leme"]
+    return render_template('freqs.html', ret=ret, relx=relx, xurl="/drevesnik/json_freqs/" + ticket)
+
+ 
+@app.route("/drevesnik/freqs/en/<ticket>")
+def ffr_en(ticket):
+
     ret = get_freqs(res_file('*_' + ticket + '*.conllu'))
     relx = ["dependent_words","dependent_lemmas", "left_words","left_lemmas", "right_words","right_lemmas","parent_words","parent_lemmas","deptypes_as_dependent","deptypes_as_parent","hit_words","hit_lemmas"]    
-    return render_template('freqs.html', ret=ret, relx=relx, xurl="/json_freqs/" + ticket)
+    return render_template('freqs_en.html', ret=ret, relx=relx, xurl="/drevesnik/json_freqs/en/" + ticket)
+
 
 @app.route("/drevesnik/freqs/<ticket>/<lang>")
 def frf(ticket, lang):
@@ -702,11 +741,24 @@ def frf(ticket, lang):
     ret = get_freqs(res_file(lang + '_' + ticket + '*.conllu'))
     relx = ["dependent_words","dependent_lemmas", "left_words","left_lemmas", "right_words","right_lemmas","parent_words","parent_lemmas","deptypes_as_dependent","deptypes_as_parent","hit_words","hit_lemmas", "left_words","left_lemmas"]
 
-    return render_template('freqs.html', ret=ret, relx=relx, xurl="/json_freqs/" + ticket + '/' + lang) 
+    return render_template('freqs.html', ret=ret, relx=relx, xurl="/drevesnik/json_freqs/en/" + ticket + '/' + lang) 
 
 
 @app.route("/drevesnik/json_freqs/<ticket>")
 def fffr(ticket):
+
+    ret = json.dumps(get_freqs(res_file('*_' + ticket + '*.conllu'), eng=False), indent=4, sort_keys=True)
+
+    response = Response(stream_with_context(ret))
+
+    response.headers['Content-Type'] = "application/octet-stream"
+    response.headers['Content-Disposition'] = "inline; filename=" + ticket + '.json'
+
+    return response
+
+
+@app.route("/drevesnik/json_freqs/en/<ticket>")
+def fffr_en(ticket):
 
     ret = json.dumps(get_freqs(res_file('*_' + ticket + '*.conllu')), indent=4, sort_keys=True)
 
@@ -716,6 +768,7 @@ def fffr(ticket):
     response.headers['Content-Disposition'] = "inline; filename=" + ticket + '.json'
 
     return response
+
 
 @app.route("/drevesnik/json_freqs/<ticket>/<lang>")
 def fr(ticket, lang):
@@ -1037,8 +1090,8 @@ def test_tree_creation():
     
 
 
-@app.route("/drevesnik/get_trees/<ticket>/<lang>/<int:start>/<int:end>")
-def get_trees(ticket, lang, start, end):
+@app.route("/drevesnik/get_trees/<iseng>/<ticket>/<lang>/<int:start>/<int:end>")
+def get_trees(iseng, ticket, lang, start, end):
 
     trees = []
 
@@ -1072,12 +1125,13 @@ def get_trees(ticket, lang, start, end):
                 curr_tree = []
         '''
         trees.extend(inf.readlines())
-        #print(trees)
         inf.close()
 
     src = ''.join(trees).split('\n')
-    ret = flask.render_template(u"result_tbl.html",trees=yield_trees(src))
-    #print(ret)
+    if iseng == "0":
+        ret = render_template(u"result_tbl.html",trees=yield_trees(src))
+    else:
+        ret = render_template(u"result_tbl_en.html",trees=yield_trees(src))
 
     return ret
 
@@ -1175,9 +1229,9 @@ def yield_trees(src):
         elif line.startswith(u"# URL:"):
             current_comment.append(Markup(u'<a href="{link}">{link}</a>'.format(link=line.split(u":",1)[1].strip())))
         elif line.startswith(u"# context-hit"):
-            current_context+=(u' <b>{sent}</b>'.format(sent=flask.escape(line.split(u":",1)[1].strip())))
+            current_context+=(u' <b>{sent}</b>'.format(sent=escape(line.split(u":",1)[1].strip())))
         elif line.startswith(u"# context"):
-            current_context+=(u' {sent}'.format(sent=flask.escape(line.split(u":",1)[1].strip())))
+            current_context+=(u' {sent}'.format(sent=escape(line.split(u":",1)[1].strip())))
         elif line.startswith(u"# hittoken") or line.startswith(u"# sent_id"):
             current_tree.append(line)
         elif not line.startswith(u"#"):

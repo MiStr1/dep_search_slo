@@ -4,6 +4,21 @@ import glob
 from collections import defaultdict
 from collections import Counter
 
+translate_to_slo = {
+    "dependent_words": "odvisne_besede",
+    "dependent_lemmas": "odvisne_leme",
+    "right_words": "desne_besede",
+    "right_lemmas": "desne_leme",
+    "parent_words": "starševske_besede",
+    "parent_lemmas": "starševske_leme",
+    "deptypes_as_dependent": "odvistnostni_tipi_kot_otrok",
+    "deptypes_as_parent": "odvistnostni_tipi_kot_starš",
+    "hit_words": "najdene_besede",
+    "hit_lemmas": "najdene_leme",
+    "left_words": "leve_besede",
+    "left_lemmas": "leve_leme"
+}
+
 def yield_kwics(f, n):
 
     inf = open(f,'rt')
@@ -197,7 +212,7 @@ def calc_freqs(f, freqs):
 
     return freqs
 
-def get_freqs(f):
+def get_freqs(f, eng=True):
 
     files = glob.glob(f)
     files.sort()
@@ -209,11 +224,20 @@ def get_freqs(f):
 
     xx = {}
     for kk in ["dependent_words","dependent_lemmas","right_words","right_lemmas","parent_words","parent_lemmas","deptypes_as_dependent","deptypes_as_parent","hit_words","hit_lemmas", "left_words","left_lemmas"]:
-        #Counter
-        xx[kk + '_most_common'] = Counter(freqs[kk]).most_common(10)
-        #All
-        xx[kk + '_count'] = len(freqs[kk])
+        if eng:
+            #Counter
+            xx[kk + '_most_common'] = Counter(freqs[kk]).most_common(10)
+            #All
+            xx[kk + '_count'] = len(freqs[kk])
+        else:
+            #Counter
+            xx[translate_to_slo[kk] + '_najbolj_pogosto'] = Counter(freqs[kk]).most_common(10)
+            #All
+            xx[translate_to_slo[kk] + '_število'] = len(freqs[kk])
+    if eng:
+        return [{'hits': freqs['hits'], 'trees': freqs['trees'], 'all_tokens': freqs['tokens'], 'docs': len(freqs['docs']), 'uniq_lemmas': len(freqs['lemmas']), 'uniq_wordforms': len(freqs['wfs'])}, xx]
+    else:
+        return [{'zadetki': freqs['hits'], 'drevesa': freqs['trees'], 'vse_pojavnice': freqs['tokens'], 'dokumenti': len(freqs['docs']), 'unikatne_leme': len(freqs['lemmas']), 'unikatne_besede': len(freqs['wfs'])}, xx]
 
-    return [{'hits': freqs['hits'], 'trees': freqs['trees'], 'all_tokens': freqs['tokens'], 'docs': len(freqs['docs']), 'uniq_lemmas': len(freqs['lemmas']), 'uniq_wordforms': len(freqs['wfs'])}, xx]
-
+        
 

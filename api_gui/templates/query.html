@@ -57,6 +57,9 @@ body {
 div {
 	padding-left: 20px;
 }
+img {
+	height: 100px;
+}
     </style>
 
 <script>
@@ -156,9 +159,6 @@ button:hover {
 <div id="queryjs">
 </div>
 
-<div id="qff">
-</div>
-
 <div id="queryjs2">
 </div>
 
@@ -179,7 +179,7 @@ button:hover {
 
     <input id="pgnum" type="text" name="FirstName" style="display: inline-block; white-space: nowrap; width: 50px"> / <div id="pages" style="display: inline-block; white-space: nowrap;">120</div>
 
-    <button id="gobtn" type="button">Ok</button>   <button id="bbtn" type="button"><</button>   <button id="fwbtn" type="button">></button>
+    <button id="gobtn" type="button">OK</button>   <button id="bbtn" type="button"><</button>   <button id="fwbtn" type="button">></button>
 
 
 </div>
@@ -252,8 +252,8 @@ function updatetrees(idx, start, end, lang){
         if (xdata.length > 200) {xdata = xdata.substr(0,200) + '...'}
         var text = "";//document.createTextNode(xdata);
         //alert(xdata);
-        $('#queryjs').html("");
-        $('#queryjs').append(text);
+        //$('#queryjs').html("");
+        //$('#queryjs').append(text);
     }); 
 
 
@@ -272,7 +272,7 @@ function loadtrees(idx, start, end, lang){
 
     //$.get("/get_trees/2016642315595390675/b'pl'/1/25", function(data, status){
 
-    $.get("{{ approot }}/drevesnik/get_trees/" + idx + "/" + lang + "/" + start + "/" + end, function(data, status){
+    $.get("{{ approot }}/drevesnik/get_trees/" + "0/" + idx + "/" + lang + "/" + start + "/" + end, function(data, status){
        $('#query_result').html(data);
        console.log("load_trees!");
        console.log(data);
@@ -345,17 +345,6 @@ function update_stuff(){
        }
     }); */
 
-
-
-    $.get("{{ approot }}/drevesnik/is_query_finished/" + idx, function(xdata, status){
-        if (xdata){
-        done = true;
-		
-        $('#qff').html("");
-		$('#qff').append("Poizvedba je zaključena!");
-        }
-
-    }); 
 
     }
 
@@ -470,16 +459,6 @@ $( document ).ready(function() {
 		$('#queryjs2').append(document.createTextNode(queryString));
     }); 
 
-    $.get("{{ approot }}/drevesnik/is_query_finished/" + idx, function(xdata, status){
-        console.log(xdata);
-        var infoxx = "Poizvedba se še izvaja ...";
-        if (xdata){
-            infoxx = "Poizvedba je zaključena!";
-        }
-        //alert(xdata);
-        $('#qff').html("");
-		$('#qff').append(infoxx);
-    }); 
     $.get("{{ approot }}/drevesnik/get_err/" + idx, function(xdata, status){
         console.log(xdata);
         var text = document.createTextNode(xdata);
