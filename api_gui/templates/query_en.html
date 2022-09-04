@@ -87,7 +87,7 @@ button:hover {
   color: white;
 }
 img {
-	height: 100px;
+	height: 60px;
 }
 
 </style>
@@ -177,7 +177,7 @@ img {
 <div>
 
 
-    <input id="pgnum" type="text" name="FirstName" style="display: inline-block; white-space: nowrap; width: 50px"> / <div id="pages" style="display: inline-block; white-space: nowrap;">120</div>
+    Page <input id="pgnum" type="text" name="FirstName" style="display: inline-block; white-space: nowrap; width: 50px"> / <div id="pages" style="display: inline-block; white-space: nowrap;">120</div>
 
     <button id="gobtn" type="button">OK</button>   <button id="bbtn" type="button"><</button>   <button id="fwbtn" type="button">></button>
 
@@ -305,12 +305,13 @@ function update_stuff(){
         //if (xdata.length > 200) {xdata = xdata.substr(0,200) + '...'}
         //var text = document.createTextNode(xdata);
         //alert(JSON.parse(xdata)['query']);
-        //var text = document.createTextNode("<b>Iskalni pogoj</b>:" + JSON.parse(xdata)['query']);
+        //var text = document.createTextNode("Iskalni pogoj: " + JSON.parse(xdata)['query']);
         $('#queryjs2').html("");
 		let queryString = JSON.parse(xdata)['query'];
 		if (queryString.endsWith(" & S=small")) {
 		   queryString = queryString.slice(0, -10);
 		}
+		$('#queryjs2').append("Query: ");
 		$('#queryjs2').append(document.createTextNode(queryString));
     }); 
 
@@ -478,6 +479,7 @@ $( document ).ready(function() {
 		if (queryString.endsWith(" & S=small")) {
 		   queryString = queryString.slice(0, -10)
 		}
+		$('#queryjs2').append("Query: ");
 		$('#queryjs2').append(document.createTextNode(queryString));
     }); 
 
