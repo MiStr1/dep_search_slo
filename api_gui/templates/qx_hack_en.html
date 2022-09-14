@@ -412,7 +412,7 @@ $( document ).ready(function() {
         for (checkbox in checkboxes){
 		    console.log("found_checked: " + checkboxes[checkbox]);
             if (checkboxes[checkbox].checked){
-                db_str = checkboxes[checkbox].name + ',';
+                db_str += checkboxes[checkbox].name + ',';
 				if (first_lang === "") {
 					first_lang = checkboxes[checkbox].name
 				}

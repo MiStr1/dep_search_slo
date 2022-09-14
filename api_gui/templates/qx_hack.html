@@ -411,14 +411,14 @@ $( document ).ready(function() {
         db_str = "";
 		first_lang = "";
         for (checkbox in checkboxes){
-		    console.log("found_checked: " + checkboxes[checkbox]);
+		    console.log("found_checked: " + checkboxes[checkbox].name);
             if (checkboxes[checkbox].checked){
-                db_str = checkboxes[checkbox].name + ',';
+                db_str += checkboxes[checkbox].name + ',';
 				if (first_lang === "") {
 					first_lang = checkboxes[checkbox].name
 				}
             }
-        }        
+        }        		
         db_str = db_str.slice(0,-1);
         var limit = $('#limitfield').val();
 
