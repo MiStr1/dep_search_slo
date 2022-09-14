@@ -1,21 +1,31 @@
-Query language
---------------
+# Povpraševalni jezik
 
-This page documents the search expression language which is used to query the online versions of the Turku Dependency Treebank, treebanks in Universal Dependencies collections and the Finnish Internet Parsebank ([search online](http://bionlp-www.utu.fi/dep_search/)), as well as any other treebank indexed using the dependency tree search by University of Turku ([download sources](https://github.com/fginter/dep_search)).
+Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](http://bionlp-www.utu.fi/dep_search/), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da omogoča tudi iskanje po oblikoskladenjskih oznakah JOS (stolpec XPOS).
 
-The query language is loosely inspired by [TGrep2](http://tedlab.mit.edu/~dr/Tgrep2/) and [TRegex](http://nlp.stanford.edu/software/tregex.shtml), but is specifically designed for querying general dependency graphs, rather than constituency trees. In particular, the underlying search engine handles non-tree structures, including directed cycles. Also, the language allows queries for rich morphological tagsets. The basic target of a query is a word with possible restriction on its dependent and governor structures which can be recursively restricted upon as well.
+Možnosti iskanja so ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ.
 
-All expression examples below are links that search through either English or Finnish treebank in the Universal Dependencies collection.
+## Lastnosti pojavnice
 
-Token specification
--------------------
+### Iskanje po oblikah
 
-Tokens with particular **word form** are searched by typing the token text as-is. Examples:
+Po besedni obliki pojavnice iščemo z vnosom poljubnega niza znakov. Primeri:
 
-*   [walk](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk)
-*   [London](http://bionlp-www.utu.fi/dep_search/?db=English&search=London)
+*   [hodim](https://orodja.cjvt.si/drevesnik/show/help-hodim/sl/0/10) poišče vse pojavnice z obliko _hodim_, zapisano s samimi malimi črkami
+*   [Baron](https://orodja.cjvt.si/drevesnik/show/help-Baron/sl/0/10) poišče vse pojavnice z obliko _Baron_, zapisano z veliko začetnico
 
-If the searched text conflicts with a know morphological tag, the text is interpreted to mean the tag. To search for the actual text instead, the text must be written in quotation marks:
+<!---
+Izpuščeno, ker iskanje po atributih ali vrednostih tako ali tako ne dela, dela samo iskanje po polnem paru Atribut=Vrednost.
+
+V malo verjetnem primeru, da je vneseno besedilo enake oblike kot ena izmed [oblikoslovnih oznak](https://universaldependencies.org/u/feat/index.html), orodje poišče pojavnice s to oznako. V tem primeru iskano besedno obliko zapišemo v narekovajih:
+
+*   ["Gen"](http://bionlp-www.utu.fi/dep_search/?db=English&search=%22Person%22) poišče vse pojavnice z obliko _Gen_ in ne pojavnic z oznako _Gen_, ki označujejo pojavnice v rodilniku.
+-->
+
+Po osnovni obliki besede (lemi) iščemo s predpono `L=`:
+
+*   [L=hoditi](https://orodja.cjvt.si/drevesnik/show/help-hoditi/sl/0/10) poišče vse pojavnice glagola _hoditi_
+
+### Iskanje po oblikoslovnih lastnostih
 
 *   ["Person"](http://bionlp-www.utu.fi/dep_search/?db=English&search=%22Person%22) searches for literal text _Person_ and not the tag _Person_
 
