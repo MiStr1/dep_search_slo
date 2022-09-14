@@ -102,7 +102,7 @@ img {
 <!--<script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script> -->
 <div style="background-color:white; float: none; max-width: 50%; padding-right: 10px;"  id="head">
 <td>
-  <h3 style="float:left;">Drevesnik</h3>
+  <h3 style="float:left;">Drevesnik: spletni vmesnik za brskanje po skladenjskih drevesnicah</h3>
   <h3 style="float:right;"><a href="{{ approot }}/drevesnik/en" >English</a></h3>
 </td>
 <br>
@@ -116,7 +116,7 @@ img {
 Iskalni pogoj <a href="{{ approot }}/drevesnik/help" target="_blank">(pomoč)</a>:<br>
 <input id="qrt" type="textarea" name="vehicle1" value="_ <nsubj _"><br>
 <input type="checkbox" id="xcasex" name="xcasex">Upoštevaj velikost črk<br>
-<input type="checkbox" id="xsmallx" name="xsmallx">Išči samo po krajših povedih<br>
+<input type="checkbox" id="xsmallx" name="xsmallx">Išči samo po kratkih povedih (do 15 besed)<br>
 <input type="checkbox" id="xrandx" name="xrandx">Vrni naključne zadetke<br><br>
 Največje število prikazanih zadetkov:<br>
 <input id="limitfield" type="textarea" name="vehicle2" value="100"><br>
@@ -135,7 +135,11 @@ Največje število prikazanih zadetkov:<br>
 <br>
 <h2>O vmesniku</h2>
 <div style="background-color:white; float: none; border: 2px solid black;border-radius: 5px;max-width: 50%;left-padding: 20px;" id="container2">
-Opis...
+Drevesnik je spletni vmesnik za brskanje po slovenskih univerzalno skladenjsko razčlenjenih korpusih, s pomočjo katerega lahko jezikoslovci in drugi raziskovalci analizirajo različne slovnične pojave v slovenščini. V polje za iskanje vpišemo svoj iskalni pogoj, izberemo enega ali več korpusov, po katerih se naj iskanje izvede, prikazane rezultate pa si lahko ogledamo ali prenesemo na svoj računalnik. 
+<br>
+Več podrobnosti o naboru in načinu pripisovanja slovničnih oznak je na voljo na uradni spletni strani označevalne sheme <a href="https://universaldependencies.org/" target="_blank">Universal Dependencies</a>, pri oblikovanju iskalnega pogoja pa nam je lahko v pomoč <a href="{{ approot }}/drevesnik/help" target="_blank">stran z opisom povpraševalnega jezika</a>. 
+<br>
+Vmesnik temelji na odprtokodnem orodju <a href="https://github.com/TurkuNLP/dep_search" target="_blank">dep_search</a>, ki smo ga lokalizirali in nadgradili s podporo raziskovalne infrastrukture CLARIN.SI in Javne agencije za raziskovalno dejavnost RS (P6-0411). Programska koda vmesnika je prosto dostopna na <a href="" target="_blank">repozitoriju CLARIN.SI</a>. 
 </div>
 
 <br>
