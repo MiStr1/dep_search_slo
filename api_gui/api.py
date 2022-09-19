@@ -27,22 +27,29 @@ import threading
 
 
 main_page_called = 0
-timer = time.time()
-lock = threading.Lock()
+unsaved_query_logs = ""
+main_page_timer = time.time()
+query_log_timer = time.time()
+main_page_call_lock = threading.Lock()
+query_log_lock = threading.Lock()
 
 
-def update_main_page_called_file(main_page_called):
-    if os.path.exists("main_page_called/main_page_called.txt"):
-        with open("main_page_called/main_page_called.txt", "r") as file:
+def update_main_page_called_file(main_page_calls):
+    if os.path.exists("logs/main_page_called.txt"):
+        with open("logs/main_page_called.txt", "r") as file:
             try:
                 saved_number_of_calls = int(file.read().strip())
             except:
                 saved_number_of_calls = 0
     else:
         saved_number_of_calls = 0
-    with open("main_page_called/main_page_called.txt", "w") as file:
-        file.write(str(saved_number_of_calls + main_page_called))
-    return main_page_called
+    with open("logs/main_page_called.txt", "w") as file:
+        file.write(str(saved_number_of_calls + main_page_calls))
+    
+  
+def update_query_logs(new_query_logs):
+    with open("logs/queries.txt", "a") as file:
+        file.write(new_query_logs)
 
 
 with open("xpos_tags.json", "r") as xpos_tags_file:
@@ -104,7 +111,19 @@ def res_file(basename):
     return os.path.join(RES_DIR, basename)
 
 
-def query_process(dbs, query, langs, ticket, limit=10000, case=False, rand=False):
+def query_process(dbs, query, langs, ticket, limit=10000, case=False, rand=False, save_to_logs=True):
+    global unsaved_query_logs
+    global query_log_timer
+    if save_to_logs:
+        query_log_lock.acquire()
+        
+        unsaved_query_logs += json.dumps({"query": query, "dbs": dbs, "limit": limit, "case": case, "random": rand}) + "\n"
+        if time.time() - query_log_timer > 20:
+            query_log_timer = time.time()
+            update_query_logs(unsaved_query_logs)
+            unsaved_query_logs = ""
+     
+        query_log_lock.release()
 
     print ('!!!', str(langs))
     print(dbs, "|", query, "|", langs, "|", ticket)
@@ -449,15 +468,14 @@ def send_js(path):
 @app.route('/drevesnik/')
 def mnf():
     global main_page_called
-    global timer
-    lock.acquire()
+    global main_page_timer
+    main_page_call_lock.acquire()
     main_page_called += 1
-    if time.time() - timer > 20 and main_page_called != 0:
-        timer = time.time()
-        curr_main_page_called = main_page_called
-        main_page_called -= curr_main_page_called
-        update_main_page_called_file(curr_main_page_called)
-    lock.release()
+    if time.time() - main_page_timer > 20:
+        main_page_timer = time.time()
+        update_main_page_called_file(main_page_called)
+        main_page_called = 0
+    main_page_call_lock.release()
     inf = open('config.json', 'r')
     xx = json.load(inf)
     inf.close()
@@ -471,14 +489,13 @@ def mnf():
 def mnfen():
     global main_page_called
     global timer
-    lock.acquire()
+    main_page_call_lock.acquire()
     main_page_called += 1
-    if time.time() - timer > 20 and main_page_called != 0:
+    if time.time() - timer > 20:
         timer = time.time()
-        curr_main_page_called = main_page_called
-        main_page_called -= curr_main_page_called
-        update_main_page_called_file(curr_main_page_called)
-    lock.release()
+        update_main_page_called_file(main_page_called)
+        main_page_called = 0
+    main_page_call_lock.release()
     inf = open('config.json', 'r')
     xx = json.load(inf)
     inf.close()
@@ -663,7 +680,7 @@ def start_query_for_cache(cached_calls):
 
                 if small_sent == 'true':
                     query = query.strip() + " & S=small"
-                p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand))
+                p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand, False))
                 p.start()
                 cache_file.write(ticket + "\n")
 

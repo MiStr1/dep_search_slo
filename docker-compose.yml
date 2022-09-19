@@ -11,7 +11,7 @@ services:
     networks:
       - net
     volumes:
-      - ./main_page_called/:/api_gui/main_page_called/
+      - ./logs/:/api_gui/logs/
 
   nginx:
       build: 
