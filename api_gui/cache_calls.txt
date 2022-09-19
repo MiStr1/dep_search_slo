@@ -1,2 +1,6 @@
 SSJ,SST	_ <nsubj _	sl	100	false	false	false	demo1
 SSJ	X=Np.*	sl	100	false	true	false	demo2
+SSJ	_ <nsubj _	sl	100	false	false	false	demo3
+SSJ	hodim	sl	100	false	true	false	help-hodim
+SSJ	Baron	sl	100	false	true	false	help-Baron
+SSJ	L=hoditi	sl	100	false	true	false	help-hoditi
