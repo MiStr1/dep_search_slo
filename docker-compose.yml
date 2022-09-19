@@ -10,16 +10,9 @@ services:
       - "5000:5000"
     networks:
       - net
-  
-    #  dep_search_old:
-    #    container_name: dep_search_old
-    #    build: 
-    #        context: .
-    #        dockerfile: Dockerfile_api_old
-    #    ports:
-    #      - "5001:5001"
-    #    networks:
-    #      - net
+    volumes:
+      - ./main_page_called/:/api_gui/main_page_called/
+
   nginx:
       build: 
         context: .
