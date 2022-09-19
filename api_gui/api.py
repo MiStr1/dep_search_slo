@@ -32,15 +32,15 @@ lock = threading.Lock()
 
 
 def update_main_page_called_file(main_page_called):
-    if os.path.exists("main_page_called/main_page_called.txt"):
-        with open("main_page_called/main_page_called.txt", "r") as file:
+    if os.path.exists("/main_page_called/main_page_called.txt"):
+        with open("/main_page_called/main_page_called.txt", "r") as file:
             try:
                 saved_number_of_calls = int(file.read().strip())
             except:
                 saved_number_of_calls = 0
     else:
         saved_number_of_calls = 0
-    with open("main_page_called/main_page_called.txt", "w") as file:
+    with open("/main_page_called/main_page_called.txt", "w") as file:
         file.write(str(saved_number_of_calls + main_page_called))
     return main_page_called
 
