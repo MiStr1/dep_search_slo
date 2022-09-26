@@ -25,6 +25,11 @@ from functools import partial
 import markdown
 import threading
 
+
+main_page_called = 0
+unsaved_query_logs = ""
+main_page_timer = time.time()
+query_log_timer = time.time()
 main_page_call_lock = threading.Lock()
 query_log_lock = threading.Lock()
 
@@ -111,7 +116,13 @@ def query_process(dbs, query, langs, ticket, limit=10000, case=False, rand=False
     global query_log_timer
     if save_to_logs:
         query_log_lock.acquire()
-        update_query_logs(json.dumps({"query": query, "dbs": dbs, "limit": limit, "case": case, "random": rand}) + "\n")
+        
+        unsaved_query_logs += json.dumps({"query": query, "dbs": dbs, "limit": limit, "case": case, "random": rand}) + "\n"
+        if time.time() - query_log_timer > 20:
+            query_log_timer = time.time()
+            update_query_logs(unsaved_query_logs)
+            unsaved_query_logs = ""
+     
         query_log_lock.release()
 
     print ('!!!', str(langs))
@@ -456,9 +467,14 @@ def send_js(path):
 
 @app.route('/drevesnik/')
 def mnf():
+    global main_page_called
     global main_page_timer
     main_page_call_lock.acquire()
-    update_main_page_called_file(1)
+    main_page_called += 1
+    if time.time() - main_page_timer > 20:
+        main_page_timer = time.time()
+        update_main_page_called_file(main_page_called)
+        main_page_called = 0
     main_page_call_lock.release()
     inf = open('config.json', 'r')
     xx = json.load(inf)

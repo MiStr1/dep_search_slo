@@ -2,6 +2,7 @@ version: "3.8"
 services:
 
   dep_search:
+    restart: on-failure
     container_name: dep_search
     build: 
         context: .
