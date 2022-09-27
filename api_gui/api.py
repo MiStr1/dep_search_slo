@@ -488,11 +488,11 @@ def mnf():
 @app.route('/drevesnik/en/')
 def mnfen():
     global main_page_called
-    global timer
+    global main_page_timer
     main_page_call_lock.acquire()
     main_page_called += 1
     if time.time() - timer > 20:
-        timer = time.time()
+        main_page_timer = time.time()
         update_main_page_called_file(main_page_called)
         main_page_called = 0
     main_page_call_lock.release()
