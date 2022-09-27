@@ -1,8 +1,6 @@
 # Povpraševalni jezik
 
-Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](http://bionlp-www.utu.fi/dep_search/), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da omogoča tudi iskanje po oblikoskladenjskih oznakah JOS (stolpec XPOS).
-
-Možnosti iskanja so ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ.
+Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](http://bionlp-www.utu.fi/dep_search/), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da omogoča tudi iskanje po oblikoskladenjskih oznakah JOS (stolpec XPOS). Možnosti iskanja so v nadaljevanju ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ.
 
 ## Lastnosti pojavnice
 
@@ -10,8 +8,8 @@ Možnosti iskanja so ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere l
 
 Po besedni obliki pojavnice iščemo z vnosom poljubnega niza znakov. Primeri:
 
-*   [hodim](https://orodja.cjvt.si/drevesnik/show/help-hodim/sl/0/10) poišče vse pojavnice z obliko _hodim_, zapisano s samimi malimi črkami
-*   [Baron](https://orodja.cjvt.si/drevesnik/show/help-Baron/sl/0/10) poišče vse pojavnice z obliko _Baron_, zapisano z veliko začetnico
+*   [hodim](https://orodja.cjvt.si/drevesnik/show/demo-hodim/sl/0/10) poišče vse pojavnice z obliko _hodim_, zapisano s samimi malimi črkami
+*   [Delo](https://orodja.cjvt.si/drevesnik/show/demo-Delo/sl/0/10) poišče vse pojavnice z obliko _Delo_, zapisano z veliko začetnico
 
 <!---
 Izpuščeno, ker iskanje po atributih ali vrednostih tako ali tako ne dela, dela samo iskanje po polnem paru Atribut=Vrednost.
@@ -21,55 +19,67 @@ V malo verjetnem primeru, da je vneseno besedilo enake oblike kot ena izmed [obl
 *   ["Gen"](http://bionlp-www.utu.fi/dep_search/?db=English&search=%22Person%22) poišče vse pojavnice z obliko _Gen_ in ne pojavnic z oznako _Gen_, ki označujejo pojavnice v rodilniku.
 -->
 
-Po osnovni obliki besede (lemi) iščemo s predpono `L=`:
+Po osnovni obliki besede (lemi) iščemo s predpono **L=**:
 
-*   [L=hoditi](https://orodja.cjvt.si/drevesnik/show/help-hoditi/sl/0/10) poišče vse pojavnice glagola _hoditi_
+*   [L=hoditi](https://orodja.cjvt.si/drevesnik/show/demo-hoditi/sl/0/10) poišče vse pojavitve pojavnic z lemo _hoditi_
 
 ### Iskanje po oblikoslovnih lastnostih
 
-*   ["Person"](http://bionlp-www.utu.fi/dep_search/?db=English&search=%22Person%22) searches for literal text _Person_ and not the tag _Person_
+Besedno vrsto in druge oblikoslovne lastnosti pojavnice lahko opredelimo na dva načina, saj so vsi korpusi označeni tako z označevalno shemo <a href="https://nl.ijs.si/jos/" target="_blank">JOS</a> kot <a href="https://universaldependencies.org/" target="_blank">Universal Dependencies</a> (UD). Oba sistema sta dobro dokumentirana in primerljiva z vidika ustreznosti naslavljanja specifik slovenščine, zato je izbira enega ali drugega odvisna predvsem od uporabnikovih preferenc.
 
-**Base form (lemma)** is given with the L= prefix.
+#### Oblikoslovne lastnosti po shemi JOS
 
-*   [L=olla](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=L%3Dolla) searches for all forms of the Finnish verb _olla_
+Po oblikoskladenjskih oznakah JOS iščemo s predpopono `X=`, pri čemer je pri teh oznakah podprta tudi uporaba posebnih operatorjev `.` (ki nadomešča poljuben znak) in `*` (ki nadomešča poljubno število pojavitev znaka na levi). Glede na specifike naloženih korpusov je trenutno možno zgolj iskanje po angleški različici oznak. Primeri:
 
-**POS and other morphological tags** can be specified by writing the tags as-is. If the tags are in form of Category=Tag, only tag part must be written. However, if multiple categories have the same tag value, the tag is mapped into the most frequent category. To seach other possible categories, also the category name must be specified.
+*   [X=Ncfsl](https://orodja.cjvt.si/drevesnik/show/demo-Ncfsl/sl/0/10) poišče vse pojavnice z oznako za občne samostalnike ženskega spola v mestniku ednine
+*   [X=Ncf.l](https://orodja.cjvt.si/drevesnik/show/demo-Ncf_l/sl/0/10) poišče vse pojavnice z oznako za občne samostalnike ženskega spola v mestniku poljubnega števila
+*   [X=Ncf.\*](https://orodja.cjvt.si/drevesnik/show/demo-Ncf_/sl/0/10) poišče vse pojavnice z oznako za občne samostalnike ženskega spola poljubnega sklona in števila
 
-*   [NOUN](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN) searches for all tokens with the POS tag _NOUN_
+#### Oblikoslovne lastnosti po shemi UD
+
+Po besedni vrsti UD iščemo z vpisom iskane besedne vrste, po drugih oblikoslovnih lastnostih pa z opisom iskane oznake v obliki para atributa in njegove vrednosti, npr. `Kategorija=Oznaka`. 
+
+*   [NOUN](https://orodja.cjvt.si/drevesnik/show/demo-NOUN/sl/0/10) poišče vse pojavnice z besedno vrsto _NOUN_ (občni samostalniki).
+*   [VerbForm=Inf](https://orodja.cjvt.si/drevesnik/show/demo-Inf/sl/0/10) poišče vse pojavnice z oznako za nedoločnike. 
+
+<!---
+Izpuščeno, ker iskanje po atributih ali vrednostih tako ali tako ne dela, dela samo iskanje po polnem paru Atribut=Vrednost.
+
+Iščemo lahko tudi zgolj po oznakah, a orodje v primeru več različnikih kategorij s to oznako kot rezultat vrne samo zadetke znotraj najpogostejše kategorije. V teh primerih je zato priporočljivo iskanje z eksplicitno izpisano kombinacijo kategorije in oznake.
+...
 *   [Par](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=Par) searches for all tokens in partitive case (Note: _Par_ is interpreted to mean _Case=Par_)
-*   [VerbForm=Inf](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=VerbForm%3DInf) searches for all infinitives
+...
 *   [Past](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=Past) searches for all past tense verbs (Note: _Past_ is interpreted to mean _Tense=Past_. Other possible category for _Past_ is _PartForm_, and to search for past participles _PartForm=Past_ must be typed.)
+...
+Možno je tudi iskanje po kategorijah brez opredelitve oznak:
 
-Also the whole categories can be searched. This is done by typing just the plain category name the same way than the tag values are used.
+*   [PartForm](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=PartForm) poišče deležnike v vseh oblikah: sedanjiku (PartForm=Pres), pretekliku (PartForm=Past) ...
+--->
 
-*   [PartForm](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=PartForm) searches for all participles: present (PartForm=Pres), past (PartForm=Past), agentive (PartForm=Agt) and negative (PartForm=Neg)
-
-The full set of categories and tags used in any supported corpus can be found under the _Show types_ link on the main page (see e.g. [English](http://bionlp-www.utu.fi/dep_search/types/English) and [Czech](http://bionlp-www.utu.fi/dep_search/types/Czech)).  
+### Posebni operatorji
   
-It is also possible to combine all above token specification with AND (&) and OR (|) operators:
+Vse zgoraj navedene lastnosti pojavnice lahko med seboj tudi kombiniramo s posebnima operatorjema **&** (in) oz. **|** (ali):
 
-*   [walk&NOUN](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk%26NOUN) searches for the word _walk_ when it is a noun, not verb
-*   [NOUN&Plur&Par](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%26Plur%26Par) searches for nouns in plural partitives
-*   [L=tehdä&PartForm=Pres](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=L%3Dtehd%C3%A4%26PartForm%3DPres) searches for present participles of the verb _tehdä_
-*   [L=kävellä|L=juosta](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=L%3Dk%C3%A4vell%C3%A4%7CL%3Djuosta) searches for all words with lemma _kävellä_ or _juosta_
+*   [lepo&X=R.\*](https://orodja.cjvt.si/drevesnik/show/demo-lepo_R/sl/0/10) poišče vse pojavnice z obliko _lepo_, ki so po shemi JOS označene kot prislov (in ne npr. pridevnik)
+*   [L=delati|L=narediti](https://orodja.cjvt.si/drevesnik/show/demo-op_delati-narediti/sl/0/10) poišče vse pojavnice z lemo _delati_ ali _narediti_
+*   [NOUN&Number=Plur](https://orodja.cjvt.si/drevesnik/show/demo-op_NOUN-Plur/sl/0/10) poišče vse samostalnike v množini
+*   [L=prst&Gender=Masc](https://orodja.cjvt.si/drevesnik/show/demo-op_prst-Masc/sl/0/10) poišče vse pojavnice z lemo _prst_ moškega spola
 
-Word forms, lemmas and tags can also be **negated** by typing the negation operator ! before the property.
+Pri iskanju po besednih oblikah, lemah in oznakah lahko uporabimo tudi **negacijo** z vpisom operatorja **!** pred lastnostjo, po kateri ne želimo iskati. Primeri:
 
-*   [can&!AUX](http://bionlp-www.utu.fi/dep_search/?db=English&search=can%26%21AUX) searches for the word _can_ when it is not an auxiliary
-*   [!Tra](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=%21Tra) searches for words which are not in translative case
-*   [voi&!L=voida](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=voi%26%21L%3Dvoida) searches for the word _voi_ when the lemma is not _voida_
+*   [L=biti&!AUX](https://orodja.cjvt.si/drevesnik/show/demo-neg_biti-AUX/sl/0/10) poišče vse pojavnice z lemo _biti_, ki niso označene kot pomožni glagol
+*   [ADJ&!X=A.\*](https://orodja.cjvt.si/drevesnik/show/demo-neg_ADJ-A/sl/0/10) poišče vse pojavnice, ki so po shemi UD označene kot pridevnik, po shemi JOS pa ne
 
-**Token can be left unspecified by typing an underscore character (\_).**
+Za iskanje po pojavnicah brez opredeljenih lastnosti uporabimo podčrtaj (\_).
 
-Dependency specification
-------------------------
+## Skladenjske relacije
 
-Dependencies are expressed using < and \> operators. These operators mimick "arrows" in the dependency graph.
+Skladenjske relacije zapisujemo z operatorjema `<` in `>`, ki posnemata puščice, s kakršnimi so običajno ponazorjena skladenjska razmerja med besedami v odvisnostno razčlenjenih povedih (odvisnostnih drevesih).
 
-*   token1 < token2 token1 is governed by token2
-*   token1 > token2 token1 governs token2
+*   `A < B` pomeni, da je pojavnica A podrejena pojavnici B, npr. _deževno_ < _jutro_
+*   `A > B` pomeni, da je pojavnica A nadrejena pojavnici B, npr. _berem_ > _časopis_
 
-The underscore character \_ stands for _any token_, that is, a token on which we place no particular restrictions. Here are simple examples of basic search expressions that restrict dependency structures:
+Podčrtaj \_ predstavlja _katerokoli pojavnico_, torej pojavnico, ki ji ne želimo opredeliti dodatnih lastnosti. Spodaj navajamo nekaj preprostih primerov iskanj po odvisnostnih skladenjskih strukturah:
 
 *   [walk < \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk%20%3C%20_) searches for all cases of _walk_ which are governed by some word
 *   [walk > \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk%20%3E%20_) searches for all cases of _walk_ which govern a word
