@@ -491,7 +491,7 @@ def mnfen():
     global main_page_timer
     main_page_call_lock.acquire()
     main_page_called += 1
-    if time.time() - timer > 20:
+    if time.time() - main_page_timer > 20:
         main_page_timer = time.time()
         update_main_page_called_file(main_page_called)
         main_page_called = 0
