@@ -1,15 +1,37 @@
 SSJ,SST	_ <nsubj _	sl	100	false	false	false	demo1
 SSJ	X=Np.*	sl	100	false	true	false	demo2
 SSJ	_ <nsubj _	sl	100	false	false	false	demo3
-SSJ	hodim	sl	100	false	true	false	demo-hodim
-SSJ	Delo	sl	100	false	true	false	demo-Delo
-SSJ	X=Ncfsl	sl	100	false	true	false	demo-Ncfsl
-SSJ	X=Ncf.l	sl	100	false	true	false	demo-Ncf_l
-SSJ	X=Ncf.\*	sl	100	false	true	false	demo-Ncf_
-SSJ	NOUN	sl	100	false	true	false	demo-NOUN
-SSJ	lepo&X=R.\*	sl	100	false	true	false	demo-lepo_R
-SSJ	L=delati|L=narediti	sl	100	false	true	false	demo-op_delati-narediti
-SSJ	NOUN&Number=Plur	sl	100	false	true	false	demo-op_NOUN-Plur
-SSJ	L=prst&Gender=Masc	sl	100	false	true	false	demo-op_prst-Masc
-SSJ	L=biti&!AUX	sl	100	false	true	false	demo-neg_biti-AUX
-SSJ	ADJ&!X=A.*	sl	100	false	true	false	demo-neg_ADJ-A
+SSJ	hodim	sl	100	false	true	true	demo_1
+SSJ	Delo	sl	100	false	true	true	demo_2
+SSJ	L=hoditi	sl	100	false	true	true	demo_2a
+SSJ	X=Ncfsl	sl	100	false	true	true	demo_3
+SSJ	X=Ncf.l	sl	100	false	true	true	demo_4
+SSJ	X=Ncf.\*	sl	100	false	true	true	demo_5
+SSJ	NOUN	sl	100	false	true	true	demo_6
+SSJ	VerbForm=Inf	sl	100	false	true	true	demo_7
+SSJ	lepo&X=R.\*	sl	100	false	true	true	demo_8
+SSJ	L=delati|L=narediti	sl	100	false	true	true	demo_9
+SSJ	NOUN&Number=Plur	sl	100	false	true	true	demo_10
+SSJ	L=prst&Gender=Masc	sl	100	false	true	true	demo_11
+SSJ	L=biti&!AUX	sl	100	false	true	true	demo_12
+SSJ	ADJ&!X=A.*	sl	100	false	true	true	demo_13
+SSJ	delo < _	sl	100	false	true	true	demo_14
+SSJ	delo > _	sl	100	false	true	true	demo_15
+SSJ	_ < delo	sl	100	false	true	true	demo_16
+SSJ	_ <cop _	sl	100	false	true	true	demo_17
+SSJ	_ >nsubj _	sl	100	false	true	true	demo_18
+SSJ	_ <nsubj|csubj _	sl	100	false	true	true	demo_19
+SSJ	_ >obj _ >iobj _	sl	100	false	true	true	demo_20
+SSJ	_ <amod _ >advmod _	sl	100	false	true	true	demo_21
+SSJ	_ >nmod _ >nmod _	sl	100	false	true	true	demo_22
+SSJ	_ >nmod _ >nmod _	sl	100	false	true	true	demo_23
+SSJ	_ >nmod (_ >nmod _)	sl	100	false	true	true	demo_24
+SSJ	_ >nmod _ !>case _	sl	100	false	true	true	demo_25
+SSJ	_ >nmod _ >!case _	sl	100	false	true	true	demo_26
+SSJ	_ <nsubj _ !(>amod|>acl) _	sl	100	false	true	true	demo_27
+SSJ	VERB >nsubj@R _	sl	100	false	true	true	demo_28
+SSJ	_ >amod@L _ >amod@R _	sl	100	false	true	true	demo_29
+SSJ	_ <case@L _	sl	100	false	true	true	demo_30
+SSJ	VERB >aux _ + Tense=Pres	sl	100	false	true	true	demo_31
+SSJ	_ -> NOUN	sl	100	false	true	true	demo_32
+SSJ	NOUN -> NOUN >amod _	sl	100	false	true	true	demo_33
