@@ -93,7 +93,7 @@ Podčrtaj \_ predstavlja _katerokoli pojavnico_, torej pojavnico, ki ji ne želi
 *   [\_ >nsubj \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_) poišče vse povedke z izraženim samostalniškim osebkom (tj. pojavnice, ki so izvor relacije `nsubj`)  
 *   [\_ <nsubj|csubj \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Cnsubj%7C%3Cnsubj%3Acop%20_) poišče vse pojavnice v vlogi osebka - tako samostalniške kot stavčne osebke (osebkove odvisnike).
 
-Z nizanjem operatorjev lahko opredelimo več odvisnostnih relacij naenkrat:
+Z nizanjem operatorjev lahko opredelimo več odvisnostnih relacij neke pojavnice naenkrat:
 
 *   [\_ >obj \_ >iobj \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_%20%3Ecop%20_) poišče vse pojavnice, ki so nadrejene tako premim kot nepremimim predmetom (povedke z dvojno vezljivostjo) 
 *   [\_ <amod \_ >advmod \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Cnsubj%3Acop%20_%20%3Enmod%20_) poišče vse pojavnice, ki so označene kot pridevniški prilastki in so obenem nadrejene določilu v obliki prislova
@@ -116,29 +116,22 @@ Za **negacijo** uporabljamo operator `!`, ki ga je mogoče uporabiti tako v komb
 
 Pri negaciji celotne relacije (npr. `\_ !>amod \_`) lahko med zadetki torej pričakujemo tudi pojavnice brez podrejenih elementov, medtem ko negacija vrste relacije (npr. `\_ >!amod \_`) pomeni, da mora imeti pojavnica vsaj en podrejeni element (ki pa ni _amod_).
 
-**Smer** odvisnostne relacije lahko opredelimo z operatorjema `@R` and `@L`, where the operator means that the right-most token of the expression must be at the right side or at the left side, respectively.
+**Smer** odvisnostne relacije lahko opredelimo z operatorjema `@R` and `@L`, ki določata, ali se skrajno desna pojavnica iskalnega pogoja pojavlja desno oz. levo od iskane pojavnice (tj. skrajno leve pojavnice iskalnega pogoja).
 
-*   [VERB >nsubj@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=VERB%20%3Ensubj%40R%20_) searches for verbs which have _nsubj_ dependent to the right
-*   [\_ >amod@L \_ >amod@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Eamod%40L%20_%20%3Eamod%40R%20_) searches for words that have two distinct adjectival modifiers (two _amod_ dependencies in parallel), one must be at the left side, the other at the right side
-*   [\_ <case@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Ccase%40R%20_) searches for case markers where the governor token is at the right side, i.e. prepositions (as compared to postpositions)
+*   [VERB >nsubj@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=VERB%20%3Ensubj%40R%20_) poišče glagole, ob katerih samostalniški osebek (_nsubj_) stoji desno od glagola
+*   [\_ >amod@L \_ >amod@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Eamod%40L%20_%20%3Eamod%40R%20_) poišče pojavnice z najmanj dvema različnima pridevniškima prilastkoma, pri čemer en stoji levo, drugi pa desno od odnosnice
+*   [\_ <case@L \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Ccase%40R%20_) poišče označevalce sklona, ki se za razliko od prevladujočih predpozicij (predlogov) pojavljajo za samostalniškim jedrom (t. i. postpozicije)
 
-Combining queries
+Združevanje iskalnih pogojev
 -----------------
+Več ločenih iskalnih pogojev lahko združimo z operatorjem `+`. Združeni iskalni pogoj v obliki `pogoj1 + pogoj2 + pogoj3` vrne vse povedi (drevesa), ki izpolnjujejo vse tri pogoje hkrati.
 
-Several queries can be combined with the + operator. A query of the form query1 + query2 + query3 returns all trees which independently satisfy all three queries.
+*   [VERB >aux \_ + Tense=Pres](http://bionlp-www.utu.fi/dep_search/?db=English&search=%28VERB%20%3Eaux%20_%20%3Eaux%20_%29%20%2B%20%28_%20%3Econj%20%28_%20%3Econj%20_%29%29) poišče vse povedi, v katerih se pojavljata tako sestavljeni glagol kot glagol v sedanjiku
 
-*   [(VERB >aux \_ >aux \_) + (\_ >conj (\_ >conj \_))](http://bionlp-www.utu.fi/dep_search/?db=English&search=%28VERB%20%3Eaux%20_%20%3Eaux%20_%29%20%2B%20%28_%20%3Econj%20%28_%20%3Econj%20_%29%29) searches for trees with a double auxiliary and a nested coordination
-
-Universal quantifcation
+Univerzalni iskalni pogoj
 -----------------------
 
-An expression of the form [\_ -> NOUN](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20-%3E%20NOUN) means "every token (\_) must be a NOUN" or in other words being a token implies being a NOUN. This is a form of universal quantification. Full tree specifications are allowed on both the left and the right side of the expression, so for example [NOUN -> NOUN <acl:relcl \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%20-%3E%20NOUN%20%3Cacl%3Arelcl%20_) means "all nouns are governed by acl:relcl"
+Z operatorjem `->` lahko opredelimo tudi pogoj, ki velja za vse iskane pojavnice (tj. pojavnice ali strukture na levi strani operatorja). Primeri:
 
-### Examples
-
-Here we give some additional examples, all of which are "clickable" and search for the given expression in the currently released version of the general Finnish treebank.
-
-*   [\_ <nmod \_ !>case \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnmod%20_%20%21%3Ecase%20_) Nominal modifiers without case markers
-*   [\_ >nsubj:cop \_ !>cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_%20%21%3Ecop%20_) Cases of dropped copula verb.
-*   [ADJ&Tra <xcomp \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=ADJ%26Tra%20%3Cxcomp%20_) Adjective complemets in translative case
-*   [VerbForm=Part <acl \_ >nsubj \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=VerbForm%3DPart%20%3Cacl%20_%20%3Ensubj%20_) Participial modifiers with a subject
+*   [\_ -> NOUN](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20-%3E%20NOUN) poišče povedi, v katerih so vse pojavnice označene kot samostalniki
+*   [NOUN -> NOUN >amod \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%20-%3E%20NOUN%20%3Cacl%3Arelcl%20_) poišče povedi, v katerih imajo vsi samostalniki pridevniški prilastek
