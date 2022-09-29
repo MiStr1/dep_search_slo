@@ -83,6 +83,4 @@ Folder `api_gui/templates` contains all the HTML templeates and folder `api_gui/
 
 <a href="http://www.clarin.si/info/about/"><img src="https://gitea.cjvt.si/lkrsnik/dependency_parsing/raw/branch/master/logos/CLARIN.png" alt="drawing" height="80"/></a>
 <a href="https://www.cjvt.si/en/"><img src="https://gitea.cjvt.si/lkrsnik/dependency_parsing/raw/branch/master/logos/CJVT.png" alt="drawing" height="80"/></a>
-<a href="https://www.fri.uni-lj.si/en/about"><img src="https://gitea.cjvt.si/lkrsnik/dependency_parsing/raw/branch/master/logos/FRI.png" alt="drawing" height="80"/></a>
-<a href="http://www.ff.uni-lj.si/an/aboutFaculty/about_faculty"><img src="https://gitea.cjvt.si/lkrsnik/dependency_parsing/raw/branch/master/logos/FF.png" alt="drawing" height="80"/></a>
 <a href="http://www.arrs.si/"><img src="api_gui/static/arrs.png" alt="arrs" height="80"/></a>
