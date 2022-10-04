@@ -1,10 +1,10 @@
 # Povpraševalni jezik
 
-Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](http://bionlp-www.utu.fi/dep_search/), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da poleg iskanja po oblikoslovnih in odvisnostnih skladenjskih oznak sheme [Universal Dependencies](https://universaldependencies.org/) omogoča tudi iskanje po oblikoskladenjskih oznakah sheme [JOS](https://nl.ijs.si/jos/). Možnosti iskanja so v nadaljevanju ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ (naključni zadetki v kratkih povedih).
+Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](https://github.com/TurkuNLP/dep_search), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da poleg iskanja po oblikoslovnih in odvisnostnih skladenjskih oznak sheme [Universal Dependencies](https://universaldependencies.org/) omogoča tudi iskanje po oblikoskladenjskih oznakah sheme [JOS](https://nl.ijs.si/jos/). Možnosti iskanja so v nadaljevanju ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ (naključni zadetki v kratkih povedih).
 
 ## Lastnosti pojavnice
 
-### Iskanje po oblikah
+### Iskanje po besednih oblikah
 
 Po besedni obliki pojavnice iščemo z vnosom poljubnega niza znakov. Primeri:
 
@@ -72,7 +72,7 @@ Pri iskanju po besednih oblikah, lemah in oznakah lahko uporabimo tudi **negacij
 
 Za iskanje po pojavnicah brez opredeljenih lastnosti uporabimo podčrtaj (`_`).
 
-## Skladenjske relacije
+## Iskanje po skladenjskih relacijah
 
 Skladenjske relacije zapisujemo z operatorjema `<` in `>`, ki posnemata puščice, s kakršnimi so običajno ponazorjena skladenjska razmerja med besedami v odvisnostno razčlenjenih povedih (odvisnostnih drevesih).
 
@@ -114,7 +114,7 @@ Za **negacijo** uporabljamo operator `!`, ki ga je mogoče uporabiti tako v komb
 --->
 *   [\_ <nsubj \_ !(>amod|>acl) \_](https://orodja.cjvt.si/drevesnik/show/demo_27/sl/0/10) poišče osebke brez pridevniških prilastkov ali prilastkovih odvisnikov
 
-Pri negaciji celotne relacije (npr. `\_ !>amod \_`) lahko med zadetki torej pričakujemo tudi pojavnice brez podrejenih elementov, medtem ko negacija vrste relacije (npr. `\_ >!amod \_`) pomeni, da mora imeti pojavnica vsaj en podrejeni element (ki pa ni _amod_).
+Pri negaciji celotne relacije (npr. `_ !>amod _`) lahko med zadetki torej pričakujemo tudi pojavnice brez podrejenih elementov, medtem ko negacija vrste relacije (npr. `\_ >!amod \_`) pomeni, da mora imeti pojavnica vsaj en podrejeni element (ki pa ni _amod_).
 
 **Smer** odvisnostne relacije lahko opredelimo z operatorjema `@R` and `@L`, ki določata, ali se skrajno desna pojavnica iskalnega pogoja pojavlja desno oz. levo od iskane pojavnice (tj. skrajno leve pojavnice iskalnega pogoja).
 
@@ -122,14 +122,13 @@ Pri negaciji celotne relacije (npr. `\_ !>amod \_`) lahko med zadetki torej pri�
 *   [\_ >amod@L \_ >amod@R \_](https://orodja.cjvt.si/drevesnik/show/demo_29/sl/0/10) poišče pojavnice z najmanj dvema različnima pridevniškima prilastkoma, pri čemer en stoji levo, drugi pa desno od odnosnice
 *   [\_ <case@L \_](https://orodja.cjvt.si/drevesnik/show/demo_30/sl/0/10) poišče označevalce sklona, ki se za razliko od prevladujočih predpozicij (predlogov) pojavljajo za samostalniškim jedrom (t. i. postpozicije)
 
-Združevanje iskalnih pogojev
------------------
+## Združevanje iskalnih pogojev
+
 Več ločenih iskalnih pogojev lahko združimo z operatorjem `+`. Združeni iskalni pogoj v obliki `pogoj1 + pogoj2 + pogoj3` vrne vse povedi (drevesa), ki izpolnjujejo vse tri pogoje hkrati.
 
 *   [VERB >aux \_ + Tense=Pres](https://orodja.cjvt.si/drevesnik/show/demo_31/sl/0/10) poišče vse povedi, v katerih se pojavljata tako sestavljeni glagol kot glagol v sedanjiku
 
-Univerzalni iskalni pogoj
------------------------
+## Univerzalni iskalni pogoji
 
 Z operatorjem `->` lahko opredelimo tudi pogoj, ki velja za vse iskane pojavnice (tj. pojavnice ali strukture na levi strani tega operatorja). Primeri:
 
