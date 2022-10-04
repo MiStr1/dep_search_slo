@@ -1,6 +1,6 @@
 # Query language
 
-This page documents the search expression language which is used to query the dependency parsed corpora in the [Drevesnik](https://orodja.cjvt.si/drevesnik/en) online interface. It is based on the query language of the [dep_search](https://github.com/TurkuNLP/dep_search) tool developed by the University of Turku. In addition to querying the morphological and dependency annotations using the [Universal Dependencies](https://universaldependencies.org/) scheme, it also enables searching by the language-specific [JOS](https://nl.ijs.si/jos/) morphosyntactic tags (XPOS column in Slovenian CONLLU treebanks).
+This page documents the search expression language which is used to query the dependency parsed corpora in the [Drevesnik](https://orodja.cjvt.si/drevesnik/en) online interface. It is based on the query language of the [dep_search](https://github.com/TurkuNLP/dep_search) tool developed by the University of Turku. In addition to querying the morphological and dependency annotations using the [Universal Dependencies](https://universaldependencies.org/) scheme, it also enables searching by the language-specific [JOS](https://nl.ijs.si/jos/) morphosyntactic tags (XPOS column in Slovenian CONLL-U treebanks).
 
 All expression examples below are links that search through the reference SSJ dependency treebank (randomized results, short sentences).
 
@@ -92,7 +92,7 @@ The **dependency type** can be specified typing it right after the dependency op
 
 *   [\_ <cop \_](https://orodja.cjvt.si/drevesnik/show/en/demo_17/sl/0/10) searches for all copula verbs (i.e. tokens which are governed through a _cop_ dependency)
 *   [\_ >nsubj \_](https://orodja.cjvt.si/drevesnik/show/en/demo_18/sl/0/10) searches for all words governing a nominal subject (i.e. various kinds of predicates)
-*   [\_ <nsubj|csubj \_](https://orodja.cjvt.si/drevesnik/show/en/demo_19/sl/0/10) searches for all words serving as a subject - either as a nominal or clausal subject
+*   [\_ <nsubj|<csubj \_](https://orodja.cjvt.si/drevesnik/show/en/demo_19/sl/0/10) searches for all words serving as a subject - either as a nominal or clausal subject
 
 You can specify a number of dependency restrictions at a time by chaining the operators:
 
