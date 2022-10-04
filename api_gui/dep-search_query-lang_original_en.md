@@ -1,32 +1,50 @@
-Query language
---------------
+# Query language
 
-This page documents the search expression language which is used to query the online versions of the Turku Dependency Treebank, treebanks in Universal Dependencies collections and the Finnish Internet Parsebank ([search online](http://bionlp-www.utu.fi/dep_search/)), as well as any other treebank indexed using the dependency tree search by University of Turku ([download sources](https://github.com/fginter/dep_search)).
+This page documents the search expression language which is used to query the dependency parsed corpora in the [Drevesnik](https://orodja.cjvt.si/drevesnik/en) online interface. It is based on the query language developed as part of the [dep_search](https://github.com/TurkuNLP/dep_search) tool, developed by the University of Turku. In addition to querying the morphological and dependency annotations using the [Universal Dependencies](https://universaldependencies.org/) scheme, it also enables searching by the language-specific [JOS](https://nl.ijs.si/jos/) morphosyntactic tags (XPOS column in Slovenian CONLLU treebanks).
 
-The query language is loosely inspired by [TGrep2](http://tedlab.mit.edu/~dr/Tgrep2/) and [TRegex](http://nlp.stanford.edu/software/tregex.shtml), but is specifically designed for querying general dependency graphs, rather than constituency trees. In particular, the underlying search engine handles non-tree structures, including directed cycles. Also, the language allows queries for rich morphological tagsets. The basic target of a query is a word with possible restriction on its dependent and governor structures which can be recursively restricted upon as well.
+All expression examples below are links that search through the reference SSJ dependency treebank (randomized results, short sentences).
 
-All expression examples below are links that search through either English or Finnish treebank in the Universal Dependencies collection.
+## Token specification
 
-Token specification
--------------------
+### Querying by word forms
 
-Tokens with particular **word form** are searched by typing the token text as-is. Examples:
+Tokens with particular word form are searched by typing the token text as-is. Examples:
 
-*   [walk](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk)
-*   [London](http://bionlp-www.utu.fi/dep_search/?db=English&search=London)
+*   [hodim](https://orodja.cjvt.si/drevesnik/show/demo_1/sl/0/10) searches for all tokens with the form _hodim_ 'I walk', written in lowercase letters
+*   [Delo](https://orodja.cjvt.si/drevesnik/show/demo_2/sl/0/10) searches for all tokens with the form _Delo_ (newspaper name, lit. 'work'), written with the first letter capitalized
+
+<!--- left out, as querying by values or attributes only doesn't work
 
 If the searched text conflicts with a know morphological tag, the text is interpreted to mean the tag. To search for the actual text instead, the text must be written in quotation marks:
 
 *   ["Person"](http://bionlp-www.utu.fi/dep_search/?db=English&search=%22Person%22) searches for literal text _Person_ and not the tag _Person_
 
-**Base form (lemma)** is given with the L= prefix.
+--->
 
-*   [L=olla](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=L%3Dolla) searches for all forms of the Finnish verb _olla_
+Base form (lemma) is given with the **L=** prefix:
 
-**POS and other morphological tags** can be specified by writing the tags as-is. If the tags are in form of Category=Tag, only tag part must be written. However, if multiple categories have the same tag value, the tag is mapped into the most frequent category. To seach other possible categories, also the category name must be specified.
+*   [L=hoditi](https://orodja.cjvt.si/drevesnik/show/demo_2a/sl/0/10) searches for all tokens with the lemma _hoditi_ 'to walk'
 
-*   [NOUN](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN) searches for all tokens with the POS tag _NOUN_
-*   [Par](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=Par) searches for all tokens in partitive case (Note: _Par_ is interpreted to mean _Case=Par_)
+### Querying by morphological features
+
+Part-of-speech categories and other morphological features can be defined in two ways, as all corpora are annotated both by the cross-linguistically standardized <a href="https://universaldependencies.org/" target="_blank">Universal Dependencies</a> (UD) annotation scheme and the local language-specific <a href="https://nl.ijs.si/jos/" target="_blank">JOS</a> annotation scheme. Both schemes are well documented and comparable with respect to an adequate description of Slovenian morphology, so the choice of the annotation scheme mostly depends on the user's preferences. 
+
+#### JOS morphosyntactic tags
+JOS morphosyntactic tags (XPOS column in Slovenian CONLLU treebanks) can be specified using the **X=** prefix. Given that each position in the tag represents a specific morphological feature with multiple possible values, the use of special operators is also supported, i.e. the dot operator (`.`) what matches any character and the asterisk operator (`*`) that matches 0 or more repetitions of the preceding character. Some examples:
+
+*   [X=Ncfsl](https://orodja.cjvt.si/drevesnik/show/demo_3/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in locative singular
+*   [X=Ncf.l](https://orodja.cjvt.si/drevesnik/show/demo_4/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in locative and any number
+*   [X=Ncf.\*](https://orodja.cjvt.si/drevesnik/show/demo_5/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in any case and number
+
+#### UD morphological features
+
+The part-of-speech category can be specified by writing the tags as-is, while other morphological features are defined as attribute-value pairs in the form of `Category=Tag`.
+
+*   [NOUN](https://orodja.cjvt.si/drevesnik/show/demo_6/sl/0/10) searches for all token with the POS tag _NOUN_ (common nouns)
+*   [VerbForm=Inf](https://orodja.cjvt.si/drevesnik/show/demo_7/sl/0/10) searches for all tokens with the infinitive verb form
+
+<!--- left out, as querying by values or attributes only doesn't work
+
 *   [VerbForm=Inf](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=VerbForm%3DInf) searches for all infinitives
 *   [Past](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=Past) searches for all past tense verbs (Note: _Past_ is interpreted to mean _Tense=Past_. Other possible category for _Past_ is _PartForm_, and to search for past participles _PartForm=Past_ must be typed.)
 
@@ -35,59 +53,67 @@ Also the whole categories can be searched. This is done by typing just the plain
 *   [PartForm](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=PartForm) searches for all participles: present (PartForm=Pres), past (PartForm=Past), agentive (PartForm=Agt) and negative (PartForm=Neg)
 
 The full set of categories and tags used in any supported corpus can be found under the _Show types_ link on the main page (see e.g. [English](http://bionlp-www.utu.fi/dep_search/types/English) and [Czech](http://bionlp-www.utu.fi/dep_search/types/Czech)).  
+
+--->
+
+### Special operators
   
-It is also possible to combine all above token specification with AND (&) and OR (|) operators:
+It is also possible to combine all above token specifications with the AND (**&**) and OR (**|**) operators:
 
-*   [walk&NOUN](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk%26NOUN) searches for the word _walk_ when it is a noun, not verb
-*   [NOUN&Plur&Par](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%26Plur%26Par) searches for nouns in plural partitives
-*   [L=tehdä&PartForm=Pres](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=L%3Dtehd%C3%A4%26PartForm%3DPres) searches for present participles of the verb _tehdä_
-*   [L=kävellä|L=juosta](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=L%3Dk%C3%A4vell%C3%A4%7CL%3Djuosta) searches for all words with lemma _kävellä_ or _juosta_
+*   [L=delati|L=narediti](https://orodja.cjvt.si/drevesnik/show/demo_9/sl/0/10) searches for all tokens with the lemma  _delati_ 'to do' (imperfective) or _narediti_ 'to do' (perfective)
+*   [NOUN&Number=Plur](https://orodja.cjvt.si/drevesnik/show/demo_10/sl/0/10) searches for all nouns in plural
+*   [L=prst&Gender=Masc](https://orodja.cjvt.si/drevesnik/show/demo_11/sl/0/10) searches for all tokens with the lemma _prst_ 'thumb' in masculine (as opposed to _prst_ 'soil' in feminine)
+*   [lepo&X=R.\*](https://orodja.cjvt.si/drevesnik/show/demo_8/sl/0/10) searches for all tokens with the word form _lepo_ 'nice', which are marked as adverbs in JOS (and not adjectives, for example)
 
-Word forms, lemmas and tags can also be **negated** by typing the negation operator ! before the property.
+Word forms, lemmas and tags can also be **negated** by typing the negation operator **!** before a feature. Some examples:
 
-*   [can&!AUX](http://bionlp-www.utu.fi/dep_search/?db=English&search=can%26%21AUX) searches for the word _can_ when it is not an auxiliary
-*   [!Tra](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=%21Tra) searches for words which are not in translative case
-*   [voi&!L=voida](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=voi%26%21L%3Dvoida) searches for the word _voi_ when the lemma is not _voida_
 
-**Token can be left unspecified by typing an underscore character (\_).**
+*   [L=biti&!AUX](https://orodja.cjvt.si/drevesnik/show/demo_12/sl/0/10) searches for all tokens with the lemma _biti_ 'to be', which are not marked as an auxiliary
+*   [ADJ&!X=A.\*](https://orodja.cjvt.si/drevesnik/show/demo_13/sl/0/10) searches for all tokens annotated as an adjective in UD, but a different part-of-speech category in JOS
 
-Dependency specification
-------------------------
+Token can be left unspecified by typing an underscore character ('_').
 
-Dependencies are expressed using < and \> operators. These operators mimick "arrows" in the dependency graph.
+## Dependency specification
 
-*   token1 < token2 token1 is governed by token2
-*   token1 > token2 token1 governs token2
+Dependencies are expressed using `<` and `>` operators, which mimick the "arrows" in the dependency graph.
 
-The underscore character \_ stands for _any token_, that is, a token on which we place no particular restrictions. Here are simple examples of basic search expressions that restrict dependency structures:
+*   `A < B` means that token A is governed by token B, e.g. _rainy_ < _morning_
+*   `A > B` means that token A governs token B, e.g. _read_ > _newspapers_
 
-*   [walk < \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk%20%3C%20_) searches for all cases of _walk_ which are governed by some word
-*   [walk > \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=walk%20%3E%20_) searches for all cases of _walk_ which govern a word
-*   [\_ < walk](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3C%20walk) searches for any token governed by _walk_
+The underscore character `_` stands for _any token_, that is, a token on which we place no particular restrictions. Here are simple examples of basic search expressions that restrict dependency structures:
 
-Note that the left-most token in the expression is always the target of the search and also identified in search results. While queries \_ <nsubj \_ and \_ >nsubj \_ match the excact same graphs, returned tokens differ.
 
-The **dependency type** can be specified typing it right after the dependency operator: \_ <type \_ or \_ >type \_. The | character denotes a logical _or_, so any of the given dependency relations will match.
+*   [delo < \_](https://orodja.cjvt.si/drevesnik/show/demo_14/sl/0/10) searches for all cases of _delo_ 'work' which are governed by some word
+*   [delo > \_](https://orodja.cjvt.si/drevesnik/show/demo_15/sl/0/10) searches for all cases of _delo_  which govern a word
+*   [\_ < delo](https://orodja.cjvt.si/drevesnik/show/demo_16/sl/0/10) searches for any token governed by _delo_ 
 
-*   [\_ <cop \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Ccop%20_) searches for all copula verbs (are governed through a cop dependency)
-*   [\_ >nsubj:cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_) searches for all words serving as a predicative in copula structures (govern a copula subject)
-*   [\_ <nsubj|<nsubj:cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Cnsubj%7C%3Cnsubj%3Acop%20_) searches for all words serving as a subject - both standard and copula subject
+Note that the left-most token in the expression is always the target of the search and also identified in search results (marked as green). While queries `delo > _` and `_ < delo` return the excact same graphs, matched tokens differ.
+
+The **dependency type** can be specified typing it right after the dependency operator, e.g. `_ <type _` or `_ >type _`. The `|` character denotes a logical _or_, so any of the given dependency relations will match.
+
+*   [\_ <cop \_](https://orodja.cjvt.si/drevesnik/show/demo_17/sl/0/10) searches for all copula verbs (i.e. tokens which are governed through a _cop_ dependency)
+*   [\_ >nsubj \_](https://orodja.cjvt.si/drevesnik/show/demo_18/sl/0/10) searches for all words governing a nominal subject (i.e. various kinds of predicates)
+*   [\_ <nsubj|csubj \_](https://orodja.cjvt.si/drevesnik/show/demo_19/sl/0/10) searches for all words serving as a subject - either as a nominal or clausal subject
 
 You can specify a number of dependency restrictions at a time by chaining the operators:
 
-*   [\_ >nsubj:cop \_ >cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_%20%3Ecop%20_) searches for words that govern both a copula subject and a copula verb
-*   [\_ <nsubj:cop \_ >nmod \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Cnsubj%3Acop%20_%20%3Enmod%20_) searches for words that serve as a copula subject and at the same govern a nominal modifier
-*   [\_ >nmod \_ >nmod \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Enmod%20_%20%3Enmod%20_) searches for words that govern two distinct nominal modifiers
+
+*   [\_ >obj \_ >iobj \_](https://orodja.cjvt.si/drevesnik/show/demo_20/sl/0/10) searches for words that govern both direct and indirect objects (e.g. ditransitive predicates)
+*   [\_ <amod \_ >advmod \_](https://orodja.cjvt.si/drevesnik/show/demo_21/sl/0/10) searches for words that serve as adjectival modifiers and at the same time govern an adverbial modifier
+*   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/demo_22/sl/0/10) earches for words that govern two distinct nominal modifiers
+
 
 Priority is marked using parentheses:
 
-*   [\_ >nmod \_ >nmod \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Enmod%20_%20%3Enmod%20_) searches for words that govern two distinct nominal modifiers (two nommod dependencies in parallel)
-*   [\_ >nmod (\_ >nmod \_)](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Enmod%20%28_%20%3Enmod%20_%29) searches for words that govern a nominal modifier which, in turn governs another nominal modifier (chain of two nmod dependencies)
-*   [NOUN >amod (\_ >amod|>acl \_)](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%20%3Eamod%20%28_%20%3Eamod%7C%3Eacl%20_%29) searches for nouns that govern an adjectival modifier, where the adjectival modifier itself governs either another adjectival modifier or a participial modifier
+*   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/demo_23/sl/0/10) searches for words that govern two distinct nominal modifiers (two nommod dependencies in parallel)
+*   [\_ >nmod (\_ >nmod \_)](https://orodja.cjvt.si/drevesnik/show/demo_24/sl/0/10) searches for words that govern a nominal modifier which, in turn governs another nominal modifier (chain of two nmod dependencies)
 
-**Negation** is marked using the negation operator !. Currently, you can negate the < and \> operators as well as dependency types as follows:
+
+**Negation** is marked using the negation operator `!`, which can be used to negate the `<` and `>` operators as well as specific dependency types. Some examples:
 
 *   [\_ >nsubj:cop \_ !>cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_%20%21%3Ecop%20_) searches for all copula predicatives (governors of nsubj:cop dependents) that do not have a copula verb (do not govern a cop dependent)
+
+<!--- ta kombinacija ne dela kot pričakovano - vrne tudi advcl z mark ... najbrž manjka 'for every dependent'
 *   [\_ <advcl \_ !>mark \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cadvcl%20_%20%21%3Emark%20_) searches for heads of unmarked adverbial clauses (governed by advcl but not governing mark)
 *   [\_ <nsubj \_ !(>amod|>acl) \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnsubj%20_%20%21%28%3Eamod%7C%3Eacl%29%20_) searches for subjects which do not govern adjectival or participial modifiers
 *   [\_ <nsubj \_ >!amod \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnsubj%20_%20%3E%21amod%20_) searches for subjects which governs something but it cannot be an adjective (governed by nsubj and governs something which is not amod)
@@ -111,12 +137,3 @@ Universal quantifcation
 -----------------------
 
 An expression of the form [\_ -> NOUN](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20-%3E%20NOUN) means "every token (\_) must be a NOUN" or in other words being a token implies being a NOUN. This is a form of universal quantification. Full tree specifications are allowed on both the left and the right side of the expression, so for example [NOUN -> NOUN <acl:relcl \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%20-%3E%20NOUN%20%3Cacl%3Arelcl%20_) means "all nouns are governed by acl:relcl"
-
-### Examples
-
-Here we give some additional examples, all of which are "clickable" and search for the given expression in the currently released version of the general Finnish treebank.
-
-*   [\_ <nmod \_ !>case \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnmod%20_%20%21%3Ecase%20_) Nominal modifiers without case markers
-*   [\_ >nsubj:cop \_ !>cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_%20%21%3Ecop%20_) Cases of dropped copula verb.
-*   [ADJ&Tra <xcomp \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=ADJ%26Tra%20%3Cxcomp%20_) Adjective complemets in translative case
-*   [VerbForm=Part <acl \_ >nsubj \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=VerbForm%3DPart%20%3Cacl%20_%20%3Ensubj%20_) Participial modifiers with a subject
