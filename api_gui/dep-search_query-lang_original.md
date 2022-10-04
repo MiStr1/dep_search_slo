@@ -1,6 +1,6 @@
 # Povpraševalni jezik
 
-Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](https://github.com/TurkuNLP/dep_search), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da poleg iskanja po oblikoslovnih in odvisnostnih skladenjskih oznak sheme [Universal Dependencies](https://universaldependencies.org/) omogoča tudi iskanje po oblikoskladenjskih oznakah sheme [JOS](https://nl.ijs.si/jos/). Možnosti iskanja so v nadaljevanju ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ (naključni zadetki v kratkih povedih).
+Na tej strani je podrobneje predstavljen formalizem, s pomočjo katerega iščemo po skladenjsko razčlenjenih korpusih na spletnem vmesniku [Drevesnik](https://orodja.cjvt.si/drevesnik/). Temelji na povpraševalnem jeziku, razvitem znotraj orodja [dep_search](https://github.com/TurkuNLP/dep_search), ki smo ga za potrebe iskanja po slovenskih korpusih prilagodili tako, da poleg iskanja po oblikoslovnih in odvisnostnih skladenjskih oznak sheme [Universal Dependencies](https://universaldependencies.org/) omogoča tudi iskanje po oblikoskladenjskih oznakah sheme [JOS](https://nl.ijs.si/jos/). Možnosti iskanja so v nadaljevanju ponazorjene z nekaj izbranimi iskalnimi pogoji, na katere lahko tudi kliknemo in si ogledamo rezultate tovrstne poizvedbe v ročno označenem korpusu SSJ (naključni zadetki v krajših povedih).
 
 ## Lastnosti pojavnice
 
@@ -114,7 +114,7 @@ Za **negacijo** uporabljamo operator `!`, ki ga je mogoče uporabiti tako v komb
 --->
 *   [\_ <nsubj \_ !(>amod|>acl) \_](https://orodja.cjvt.si/drevesnik/show/demo_27/sl/0/10) poišče osebke brez pridevniških prilastkov ali prilastkovih odvisnikov
 
-Pri negaciji celotne relacije (npr. `_ !>amod _`) lahko med zadetki torej pričakujemo tudi pojavnice brez podrejenih elementov, medtem ko negacija vrste relacije (npr. `\_ >!amod \_`) pomeni, da mora imeti pojavnica vsaj en podrejeni element (ki pa ni _amod_).
+Pri negaciji celotne relacije (npr. `_ !>amod _`) lahko med zadetki torej pričakujemo tudi pojavnice brez podrejenih elementov, medtem ko negacija vrste relacije (npr. `_ >!amod _`) pomeni, da mora imeti pojavnica vsaj en podrejeni element (ki pa ni _amod_).
 
 **Smer** odvisnostne relacije lahko opredelimo z operatorjema `@R` and `@L`, ki določata, ali se skrajno desna pojavnica iskalnega pogoja pojavlja desno oz. levo od iskane pojavnice (tj. skrajno leve pojavnice iskalnega pogoja).
 
