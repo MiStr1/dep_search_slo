@@ -91,7 +91,7 @@ Cilj poizvedbe je vedno pojavnica na skrajni levi, ki se v rezultatih tudi obarv
 
 *   [\_ <cop \_](https://orodja.cjvt.si/drevesnik/show/demo_17/sl/0/10) poišče vse vezne glagole (tj. pojavnice, ki so cilj relacije `cop`)
 *   [\_ >nsubj \_](https://orodja.cjvt.si/drevesnik/show/demo_18/sl/0/10) poišče vse povedke z izraženim samostalniškim osebkom (tj. pojavnice, ki so izvor relacije `nsubj`)  
-*   [\_ <nsubj|csubj \_](https://orodja.cjvt.si/drevesnik/show/demo_19/sl/0/10) poišče vse pojavnice v vlogi osebka - tako samostalniške kot stavčne osebke (osebkove odvisnike).
+*   [\_ <nsubj|<csubj \_](https://orodja.cjvt.si/drevesnik/show/demo_19/sl/0/10) poišče vse pojavnice v vlogi osebka - tako samostalniške kot stavčne osebke (osebkove odvisnike).
 
 Z nizanjem operatorjev lahko opredelimo več odvisnostnih relacij neke pojavnice naenkrat:
 
