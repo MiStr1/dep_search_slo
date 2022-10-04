@@ -1,6 +1,6 @@
 # Query language
 
-This page documents the search expression language which is used to query the dependency parsed corpora in the [Drevesnik](https://orodja.cjvt.si/drevesnik/en) online interface. It is based on the query language developed as part of the [dep_search](https://github.com/TurkuNLP/dep_search) tool, developed by the University of Turku. In addition to querying the morphological and dependency annotations using the [Universal Dependencies](https://universaldependencies.org/) scheme, it also enables searching by the language-specific [JOS](https://nl.ijs.si/jos/) morphosyntactic tags (XPOS column in Slovenian CONLLU treebanks).
+This page documents the search expression language which is used to query the dependency parsed corpora in the [Drevesnik](https://orodja.cjvt.si/drevesnik/en) online interface. It is based on the query language of the [dep_search](https://github.com/TurkuNLP/dep_search) tool developed by the University of Turku. In addition to querying the morphological and dependency annotations using the [Universal Dependencies](https://universaldependencies.org/) scheme, it also enables searching by the language-specific [JOS](https://nl.ijs.si/jos/) morphosyntactic tags (XPOS column in Slovenian CONLLU treebanks).
 
 All expression examples below are links that search through the reference SSJ dependency treebank (randomized results, short sentences).
 
@@ -67,7 +67,6 @@ It is also possible to combine all above token specifications with the AND (**&*
 
 Word forms, lemmas and tags can also be **negated** by typing the negation operator **!** before a feature. Some examples:
 
-
 *   [L=biti&!AUX](https://orodja.cjvt.si/drevesnik/show/demo_12/sl/0/10) searches for all tokens with the lemma _biti_ 'to be', which are not marked as an auxiliary
 *   [ADJ&!X=A.\*](https://orodja.cjvt.si/drevesnik/show/demo_13/sl/0/10) searches for all tokens annotated as an adjective in UD, but a different part-of-speech category in JOS
 
@@ -102,7 +101,6 @@ You can specify a number of dependency restrictions at a time by chaining the op
 *   [\_ <amod \_ >advmod \_](https://orodja.cjvt.si/drevesnik/show/demo_21/sl/0/10) searches for words that serve as adjectival modifiers and at the same time govern an adverbial modifier
 *   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/demo_22/sl/0/10) earches for words that govern two distinct nominal modifiers
 
-
 Priority is marked using parentheses:
 
 *   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/demo_23/sl/0/10) searches for words that govern two distinct nominal modifiers (two nommod dependencies in parallel)
@@ -111,29 +109,33 @@ Priority is marked using parentheses:
 
 **Negation** is marked using the negation operator `!`, which can be used to negate the `<` and `>` operators as well as specific dependency types. Some examples:
 
-*   [\_ >nsubj:cop \_ !>cop \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20%3Ensubj%3Acop%20_%20%21%3Ecop%20_) searches for all copula predicatives (governors of nsubj:cop dependents) that do not have a copula verb (do not govern a cop dependent)
+*   [\_ >nmod \_ !>case \_](https://orodja.cjvt.si/drevesnik/show/demo_25/sl/0/10) searches for all nominal modifiers that do not govern a case marker (i.e. nominal modifiers that are not prepositional phrases)
+*   [\_ >nmod \_ >!case \_](https://orodja.cjvt.si/drevesnik/show/demo_26/sl/0/10) searches for all nominal modifiers that govern some word, but not a case marker
 
 <!--- ta kombinacija ne dela kot pričakovano - vrne tudi advcl z mark ... najbrž manjka 'for every dependent'
 *   [\_ <advcl \_ !>mark \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cadvcl%20_%20%21%3Emark%20_) searches for heads of unmarked adverbial clauses (governed by advcl but not governing mark)
 *   [\_ <nsubj \_ !(>amod|>acl) \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnsubj%20_%20%21%28%3Eamod%7C%3Eacl%29%20_) searches for subjects which do not govern adjectival or participial modifiers
 *   [\_ <nsubj \_ >!amod \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnsubj%20_%20%3E%21amod%20_) searches for subjects which governs something but it cannot be an adjective (governed by nsubj and governs something which is not amod)
+--->
+*   [\_ <nsubj \_ !(>amod|>acl) \_](https://orodja.cjvt.si/drevesnik/show/demo_27/sl/0/10) searches for nominal subjects which do not govern adjectival or participial modifiers
+*   
+Note that negating a relation (e.g. `_ !>amod _`) allows for the token not having any dependent, whereas negating a type (e.g. `_ >!amod _`) means that the token must have at least one dependent (which is not _amod_).
 
-Note that in \_ !>amod \_ it is accepted that the token does not have any dependent, whereas in \_ >!amod \_ the token must have at least one dependent which is not _amod_.
+**Direction** of the dependency relation can be specified using operators `@R` and `@L`, where the operator means that the right-most token of the expression must be at the right side or at the left side, respectively.
 
-**Direction** of the dependency relation can be specified using operators @R and @L, where the operator means that the right-most token of the expression must be at the right side or at the left side, respectively.
+*   [VERB >nsubj@R \_](https://orodja.cjvt.si/drevesnik/show/demo_28/sl/0/10) searches for verbs which have _nsubj_ dependent to the right
+*   [\_ >amod@L \_ >amod@R \_](https://orodja.cjvt.si/drevesnik/show/demo_29/sl/0/10) searches for words that have two distinct adjectival modifiers (two _amod_ dependencies in parallel), one must be at the left side, the other at the right side
+*   [\_ <case@L \_](https://orodja.cjvt.si/drevesnik/show/demo_30/sl/0/10) searches for case markers where the governor token is at the left side, i.e. postpositions (as compared to prepositions)
 
-*   [VERB >nsubj@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=VERB%20%3Ensubj%40R%20_) searches for verbs which have _nsubj_ dependent to the right
-*   [\_ >amod@L \_ >amod@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Eamod%40L%20_%20%3Eamod%40R%20_) searches for words that have two distinct adjectival modifiers (two _amod_ dependencies in parallel), one must be at the left side, the other at the right side
-*   [\_ <case@R \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Ccase%40R%20_) searches for case markers where the governor token is at the right side, i.e. prepositions (as compared to postpositions)
+## Combining queries
 
-Combining queries
------------------
+Several queries can be combined with the `+` operator. A query of the form query1 + query2 + query3 returns all trees which independently satisfy all three queries.
 
-Several queries can be combined with the + operator. A query of the form query1 + query2 + query3 returns all trees which independently satisfy all three queries.
+*   [VERB >aux \_ + Tense=Pres](https://orodja.cjvt.si/drevesnik/show/demo_31/sl/0/10) searches for trees with a simple and a complex verb phrase
 
-*   [(VERB >aux \_ >aux \_) + (\_ >conj (\_ >conj \_))](http://bionlp-www.utu.fi/dep_search/?db=English&search=%28VERB%20%3Eaux%20_%20%3Eaux%20_%29%20%2B%20%28_%20%3Econj%20%28_%20%3Econj%20_%29%29) searches for trees with a double auxiliary and a nested coordination
+## Universal quantifcation
 
-Universal quantifcation
------------------------
+The operator '->' introduces a condition that all the matched tokens should fulfill (i.e. the tokens or structures preceding this operator). For example:
 
-An expression of the form [\_ -> NOUN](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=_%20-%3E%20NOUN) means "every token (\_) must be a NOUN" or in other words being a token implies being a NOUN. This is a form of universal quantification. Full tree specifications are allowed on both the left and the right side of the expression, so for example [NOUN -> NOUN <acl:relcl \_](http://bionlp-www.utu.fi/dep_search/?db=Finnish&search=NOUN%20-%3E%20NOUN%20%3Cacl%3Arelcl%20_) means "all nouns are governed by acl:relcl"
+*   [\_ -> NOUN](https://orodja.cjvt.si/drevesnik/show/demo_32/sl/0/10) means "every token (`_`) must be a NOUN" and thus matches sentences with nouns only
+*   [NOUN -> NOUN >amod \_](https://orodja.cjvt.si/drevesnik/show/demo_33/sl/0/10) means "all nouns must govern an adjectival modifier" and thus matches sentences with modified nouns only 
