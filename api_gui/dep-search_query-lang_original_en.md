@@ -10,8 +10,8 @@ All expression examples below are links that search through the reference SSJ de
 
 Tokens with particular word form are searched by typing the token text as-is. Examples:
 
-*   [hodim](https://orodja.cjvt.si/drevesnik/show/demo_1/sl/0/10) searches for all tokens with the form _hodim_ 'I walk', written in lowercase letters
-*   [Delo](https://orodja.cjvt.si/drevesnik/show/demo_2/sl/0/10) searches for all tokens with the form _Delo_ (newspaper name, lit. 'work'), written with the first letter capitalized
+*   [hodim](https://orodja.cjvt.si/drevesnik/show/en/demo_1/sl/0/10) searches for all tokens with the form _hodim_ 'I walk', written in lowercase letters
+*   [Delo](https://orodja.cjvt.si/drevesnik/show/en/demo_2/sl/0/10) searches for all tokens with the form _Delo_ (newspaper name, lit. 'work'), written with the first letter capitalized
 
 <!--- left out, as querying by values or attributes only doesn't work
 
@@ -23,7 +23,7 @@ If the searched text conflicts with a know morphological tag, the text is interp
 
 Base form (lemma) is given with the **L=** prefix:
 
-*   [L=hoditi](https://orodja.cjvt.si/drevesnik/show/demo_2a/sl/0/10) searches for all tokens with the lemma _hoditi_ 'to walk'
+*   [L=hoditi](https://orodja.cjvt.si/drevesnik/show/en/demo_2a/sl/0/10) searches for all tokens with the lemma _hoditi_ 'to walk'
 
 ### Querying by morphological features
 
@@ -32,16 +32,16 @@ Part-of-speech categories and other morphological features can be defined in two
 #### JOS morphosyntactic tags
 JOS morphosyntactic tags (XPOS column in Slovenian CONLLU treebanks) can be specified using the **X=** prefix. Given that each position in the tag represents a specific morphological feature with multiple possible values, the use of special operators is also supported, i.e. the dot operator (`.`) what matches any character and the asterisk operator (`*`) that matches 0 or more repetitions of the preceding character. Some examples:
 
-*   [X=Ncfsl](https://orodja.cjvt.si/drevesnik/show/demo_3/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in locative singular
-*   [X=Ncf.l](https://orodja.cjvt.si/drevesnik/show/demo_4/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in locative and any number
-*   [X=Ncf.\*](https://orodja.cjvt.si/drevesnik/show/demo_5/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in any case and number
+*   [X=Ncfsl](https://orodja.cjvt.si/drevesnik/show/en/demo_3/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in locative singular
+*   [X=Ncf.l](https://orodja.cjvt.si/drevesnik/show/en/demo_4/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in locative and any number
+*   [X=Ncf.\*](https://orodja.cjvt.si/drevesnik/show/en/demo_5/sl/0/10) searches for all tokens with the JOS tag for feminine common nouns in any case and number
 
 #### UD morphological features
 
 The part-of-speech category can be specified by writing the tags as-is, while other morphological features are defined as attribute-value pairs in the form of `Category=Tag`.
 
-*   [NOUN](https://orodja.cjvt.si/drevesnik/show/demo_6/sl/0/10) searches for all token with the POS tag _NOUN_ (common nouns)
-*   [VerbForm=Inf](https://orodja.cjvt.si/drevesnik/show/demo_7/sl/0/10) searches for all tokens with the infinitive verb form
+*   [NOUN](https://orodja.cjvt.si/drevesnik/show/en/demo_6/sl/0/10) searches for all token with the POS tag _NOUN_ (common nouns)
+*   [VerbForm=Inf](https://orodja.cjvt.si/drevesnik/show/en/demo_7/sl/0/10) searches for all tokens with the infinitive verb form
 
 <!--- left out, as querying by values or attributes only doesn't work
 
@@ -60,15 +60,15 @@ The full set of categories and tags used in any supported corpus can be found un
   
 It is also possible to combine all above token specifications with the AND (**&**) and OR (**|**) operators:
 
-*   [L=delati|L=narediti](https://orodja.cjvt.si/drevesnik/show/demo_9/sl/0/10) searches for all tokens with the lemma  _delati_ 'to do' (imperfective) or _narediti_ 'to do' (perfective)
-*   [NOUN&Number=Plur](https://orodja.cjvt.si/drevesnik/show/demo_10/sl/0/10) searches for all nouns in plural
-*   [L=prst&Gender=Masc](https://orodja.cjvt.si/drevesnik/show/demo_11/sl/0/10) searches for all tokens with the lemma _prst_ 'thumb' in masculine (as opposed to _prst_ 'soil' in feminine)
-*   [lepo&X=R.\*](https://orodja.cjvt.si/drevesnik/show/demo_8/sl/0/10) searches for all tokens with the word form _lepo_ 'nice', which are marked as adverbs in JOS (and not adjectives, for example)
+*   [L=delati|L=narediti](https://orodja.cjvt.si/drevesnik/show/en/demo_9/sl/0/10) searches for all tokens with the lemma  _delati_ 'to do' (imperfective) or _narediti_ 'to do' (perfective)
+*   [NOUN&Number=Plur](https://orodja.cjvt.si/drevesnik/show/en/demo_10/sl/0/10) searches for all nouns in plural
+*   [L=prst&Gender=Masc](https://orodja.cjvt.si/drevesnik/show/en/demo_11/sl/0/10) searches for all tokens with the lemma _prst_ 'thumb' in masculine (as opposed to _prst_ 'soil' in feminine)
+*   [lepo&X=R.\*](https://orodja.cjvt.si/drevesnik/show/en/demo_8/sl/0/10) searches for all tokens with the word form _lepo_ 'nice', which are marked as adverbs in JOS (and not adjectives, for example)
 
 Word forms, lemmas and tags can also be **negated** by typing the negation operator **!** before a feature. Some examples:
 
-*   [L=biti&!AUX](https://orodja.cjvt.si/drevesnik/show/demo_12/sl/0/10) searches for all tokens with the lemma _biti_ 'to be', which are not marked as an auxiliary
-*   [ADJ&!X=A.\*](https://orodja.cjvt.si/drevesnik/show/demo_13/sl/0/10) searches for all tokens annotated as an adjective in UD, but a different part-of-speech category in JOS
+*   [L=biti&!AUX](https://orodja.cjvt.si/drevesnik/show/en/demo_12/sl/0/10) searches for all tokens with the lemma _biti_ 'to be', which are not marked as an auxiliary
+*   [ADJ&!X=A.\*](https://orodja.cjvt.si/drevesnik/show/en/demo_13/sl/0/10) searches for all tokens annotated as an adjective in UD, but a different part-of-speech category in JOS
 
 Token can be left unspecified by typing an underscore character ('_').
 
@@ -82,60 +82,60 @@ Dependencies are expressed using `<` and `>` operators, which mimick the "arrows
 The underscore character `_` stands for _any token_, that is, a token on which we place no particular restrictions. Here are simple examples of basic search expressions that restrict dependency structures:
 
 
-*   [delo < \_](https://orodja.cjvt.si/drevesnik/show/demo_14/sl/0/10) searches for all cases of _delo_ 'work' which are governed by some word
-*   [delo > \_](https://orodja.cjvt.si/drevesnik/show/demo_15/sl/0/10) searches for all cases of _delo_  which govern a word
-*   [\_ < delo](https://orodja.cjvt.si/drevesnik/show/demo_16/sl/0/10) searches for any token governed by _delo_ 
+*   [delo < \_](https://orodja.cjvt.si/drevesnik/show/en/demo_14/sl/0/10) searches for all cases of _delo_ 'work' which are governed by some word
+*   [delo > \_](https://orodja.cjvt.si/drevesnik/show/en/demo_15/sl/0/10) searches for all cases of _delo_  which govern a word
+*   [\_ < delo](https://orodja.cjvt.si/drevesnik/show/en/demo_16/sl/0/10) searches for any token governed by _delo_ 
 
 Note that the left-most token in the expression is always the target of the search and also identified in search results (marked as green). While queries `delo > _` and `_ < delo` return the excact same graphs, matched tokens differ.
 
 The **dependency type** can be specified typing it right after the dependency operator, e.g. `_ <type _` or `_ >type _`. The `|` character denotes a logical _or_, so any of the given dependency relations will match.
 
-*   [\_ <cop \_](https://orodja.cjvt.si/drevesnik/show/demo_17/sl/0/10) searches for all copula verbs (i.e. tokens which are governed through a _cop_ dependency)
-*   [\_ >nsubj \_](https://orodja.cjvt.si/drevesnik/show/demo_18/sl/0/10) searches for all words governing a nominal subject (i.e. various kinds of predicates)
-*   [\_ <nsubj|csubj \_](https://orodja.cjvt.si/drevesnik/show/demo_19/sl/0/10) searches for all words serving as a subject - either as a nominal or clausal subject
+*   [\_ <cop \_](https://orodja.cjvt.si/drevesnik/show/en/demo_17/sl/0/10) searches for all copula verbs (i.e. tokens which are governed through a _cop_ dependency)
+*   [\_ >nsubj \_](https://orodja.cjvt.si/drevesnik/show/en/demo_18/sl/0/10) searches for all words governing a nominal subject (i.e. various kinds of predicates)
+*   [\_ <nsubj|csubj \_](https://orodja.cjvt.si/drevesnik/show/en/demo_19/sl/0/10) searches for all words serving as a subject - either as a nominal or clausal subject
 
 You can specify a number of dependency restrictions at a time by chaining the operators:
 
 
-*   [\_ >obj \_ >iobj \_](https://orodja.cjvt.si/drevesnik/show/demo_20/sl/0/10) searches for words that govern both direct and indirect objects (e.g. ditransitive predicates)
-*   [\_ <amod \_ >advmod \_](https://orodja.cjvt.si/drevesnik/show/demo_21/sl/0/10) searches for words that serve as adjectival modifiers and at the same time govern an adverbial modifier
-*   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/demo_22/sl/0/10) earches for words that govern two distinct nominal modifiers
+*   [\_ >obj \_ >iobj \_](https://orodja.cjvt.si/drevesnik/show/en/demo_20/sl/0/10) searches for words that govern both direct and indirect objects (e.g. ditransitive predicates)
+*   [\_ <amod \_ >advmod \_](https://orodja.cjvt.si/drevesnik/show/en/demo_21/sl/0/10) searches for words that serve as adjectival modifiers and at the same time govern an adverbial modifier
+*   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/en/demo_22/sl/0/10) earches for words that govern two distinct nominal modifiers
 
 Priority is marked using parentheses:
 
-*   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/demo_23/sl/0/10) searches for words that govern two distinct nominal modifiers (two nommod dependencies in parallel)
-*   [\_ >nmod (\_ >nmod \_)](https://orodja.cjvt.si/drevesnik/show/demo_24/sl/0/10) searches for words that govern a nominal modifier which, in turn governs another nominal modifier (chain of two nmod dependencies)
+*   [\_ >nmod \_ >nmod \_](https://orodja.cjvt.si/drevesnik/show/en/demo_23/sl/0/10) searches for words that govern two distinct nominal modifiers (two nommod dependencies in parallel)
+*   [\_ >nmod (\_ >nmod \_)](https://orodja.cjvt.si/drevesnik/show/en/demo_24/sl/0/10) searches for words that govern a nominal modifier which, in turn governs another nominal modifier (chain of two nmod dependencies)
 
 
 **Negation** is marked using the negation operator `!`, which can be used to negate the `<` and `>` operators as well as specific dependency types. Some examples:
 
-*   [\_ >nmod \_ !>case \_](https://orodja.cjvt.si/drevesnik/show/demo_25/sl/0/10) searches for all nominal modifiers that do not govern a case marker (i.e. nominal modifiers that are not prepositional phrases)
-*   [\_ >nmod \_ >!case \_](https://orodja.cjvt.si/drevesnik/show/demo_26/sl/0/10) searches for all nominal modifiers that govern some word, but not a case marker
+*   [\_ >nmod \_ !>case \_](https://orodja.cjvt.si/drevesnik/show/en/demo_25/sl/0/10) searches for all nominal modifiers that do not govern a case marker (i.e. nominal modifiers that are not prepositional phrases)
+*   [\_ >nmod \_ >!case \_](https://orodja.cjvt.si/drevesnik/show/en/demo_26/sl/0/10) searches for all nominal modifiers that govern some word, but not a case marker
 
 <!--- ta kombinacija ne dela kot pričakovano - vrne tudi advcl z mark ... najbrž manjka 'for every dependent'
 *   [\_ <advcl \_ !>mark \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cadvcl%20_%20%21%3Emark%20_) searches for heads of unmarked adverbial clauses (governed by advcl but not governing mark)
 *   [\_ <nsubj \_ !(>amod|>acl) \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnsubj%20_%20%21%28%3Eamod%7C%3Eacl%29%20_) searches for subjects which do not govern adjectival or participial modifiers
 *   [\_ <nsubj \_ >!amod \_](http://bionlp-www.utu.fi/dep_search/?db=English&search=_%20%3Cnsubj%20_%20%3E%21amod%20_) searches for subjects which governs something but it cannot be an adjective (governed by nsubj and governs something which is not amod)
 --->
-*   [\_ <nsubj \_ !(>amod|>acl) \_](https://orodja.cjvt.si/drevesnik/show/demo_27/sl/0/10) searches for nominal subjects which do not govern adjectival or participial modifiers
+*   [\_ <nsubj \_ !(>amod|>acl) \_](https://orodja.cjvt.si/drevesnik/show/en/demo_27/sl/0/10) searches for nominal subjects which do not govern adjectival or participial modifiers
 *   
 Note that negating a relation (e.g. `_ !>amod _`) allows for the token not having any dependent, whereas negating a type (e.g. `_ >!amod _`) means that the token must have at least one dependent (which is not _amod_).
 
 **Direction** of the dependency relation can be specified using operators `@R` and `@L`, where the operator means that the right-most token of the expression must be at the right side or at the left side, respectively.
 
-*   [VERB >nsubj@R \_](https://orodja.cjvt.si/drevesnik/show/demo_28/sl/0/10) searches for verbs which have _nsubj_ dependent to the right
-*   [\_ >amod@L \_ >amod@R \_](https://orodja.cjvt.si/drevesnik/show/demo_29/sl/0/10) searches for words that have two distinct adjectival modifiers (two _amod_ dependencies in parallel), one must be at the left side, the other at the right side
-*   [\_ <case@L \_](https://orodja.cjvt.si/drevesnik/show/demo_30/sl/0/10) searches for case markers where the governor token is at the left side, i.e. postpositions (as compared to prepositions)
+*   [VERB >nsubj@R \_](https://orodja.cjvt.si/drevesnik/show/en/demo_28/sl/0/10) searches for verbs which have _nsubj_ dependent to the right
+*   [\_ >amod@L \_ >amod@R \_](https://orodja.cjvt.si/drevesnik/show/en/demo_29/sl/0/10) searches for words that have two distinct adjectival modifiers (two _amod_ dependencies in parallel), one must be at the left side, the other at the right side
+*   [\_ <case@L \_](https://orodja.cjvt.si/drevesnik/show/en/demo_30/sl/0/10) searches for case markers where the governor token is at the left side, i.e. postpositions (as compared to prepositions)
 
 ## Combining queries
 
 Several queries can be combined with the `+` operator. A query of the form query1 + query2 + query3 returns all trees which independently satisfy all three queries.
 
-*   [VERB >aux \_ + Tense=Pres](https://orodja.cjvt.si/drevesnik/show/demo_31/sl/0/10) searches for trees with a simple and a complex verb phrase
+*   [VERB >aux \_ + Tense=Pres](https://orodja.cjvt.si/drevesnik/show/en/demo_31/sl/0/10) searches for trees with a simple and a complex verb phrase
 
 ## Universal quantifcation
 
 The operator '->' introduces a condition that all the matched tokens should fulfill (i.e. the tokens or structures preceding this operator). For example:
 
-*   [\_ -> NOUN](https://orodja.cjvt.si/drevesnik/show/demo_32/sl/0/10) means "every token (`_`) must be a NOUN" and thus matches sentences with nouns only
-*   [NOUN -> NOUN >amod \_](https://orodja.cjvt.si/drevesnik/show/demo_33/sl/0/10) means "all nouns must govern an adjectival modifier" and thus matches sentences with modified nouns only 
+*   [\_ -> NOUN](https://orodja.cjvt.si/drevesnik/show/en/demo_32/sl/0/10) means "every token (`_`) must be a NOUN" and thus matches sentences with nouns only
+*   [NOUN -> NOUN >amod \_](https://orodja.cjvt.si/drevesnik/show/en/demo_33/sl/0/10) means "all nouns must govern an adjectival modifier" and thus matches sentences with modified nouns only 
