@@ -6,10 +6,10 @@ SSJ	Delo	sl	100	false	true	true	demo_2
 SSJ	L=hoditi	sl	100	false	true	true	demo_2a
 SSJ	X=Ncfsl	sl	100	false	true	true	demo_3
 SSJ	X=Ncf.l	sl	100	false	true	true	demo_4
-SSJ	X=Ncf.\*	sl	100	false	true	true	demo_5
+SSJ	X=Ncf.*	sl	100	false	true	true	demo_5
 SSJ	NOUN	sl	100	false	true	true	demo_6
 SSJ	VerbForm=Inf	sl	100	false	true	true	demo_7
-SSJ	lepo&X=R.\*	sl	100	false	true	true	demo_8
+SSJ	lepo&X=R.*	sl	100	false	true	true	demo_8
 SSJ	L=delati|L=narediti	sl	100	false	true	true	demo_9
 SSJ	NOUN&Number=Plur	sl	100	false	true	true	demo_10
 SSJ	L=prst&Gender=Masc	sl	100	false	true	true	demo_11
@@ -20,7 +20,7 @@ SSJ	delo > _	sl	100	false	true	true	demo_15
 SSJ	_ < delo	sl	100	false	true	true	demo_16
 SSJ	_ <cop _	sl	100	false	true	true	demo_17
 SSJ	_ >nsubj _	sl	100	false	true	true	demo_18
-SSJ	_ <nsubj|csubj _	sl	100	false	true	true	demo_19
+SSJ	_ <nsubj|<csubj _	sl	100	false	true	true	demo_19
 SSJ	_ >obj _ >iobj _	sl	100	false	true	true	demo_20
 SSJ	_ <amod _ >advmod _	sl	100	false	true	true	demo_21
 SSJ	_ >nmod _ >nmod _	sl	100	false	true	true	demo_22
@@ -31,7 +31,7 @@ SSJ	_ >nmod _ >!case _	sl	100	false	true	true	demo_26
 SSJ	_ <nsubj _ !(>amod|>acl) _	sl	100	false	true	true	demo_27
 SSJ	VERB >nsubj@R _	sl	100	false	true	true	demo_28
 SSJ	_ >amod@L _ >amod@R _	sl	100	false	true	true	demo_29
-SSJ	_ <case@L _	sl	100	false	true	true	demo_30
+SSJ	_ <case@L _	sl	100	false	true	false	demo_30
 SSJ	VERB >aux _ + Tense=Pres	sl	100	false	true	true	demo_31
 SSJ	_ -> NOUN	sl	100	false	true	true	demo_32
 SSJ	NOUN -> NOUN >amod _	sl	100	false	true	true	demo_33
