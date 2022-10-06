@@ -28,7 +28,7 @@
 
         {{ xx }}- skupno : {{ ret[1][ xx + "_skupno"] }}<br><br>
         {% if ret[1][xx + "_pogosto"]|length > 0 %}
-            <h3>Top 10</h3>
+            <h3>Najpogostejših 10</h3>
                 {% for k, v in ret[1][xx + "_pogosto"] %}
                     {{ k }} : {{ v }} <br>
                 {% endfor %}
