@@ -12,7 +12,8 @@ services:
     networks:
       - net
     volumes:
-      - ./logs/:/api_gui/logs/
+      - ../../logs/:/api_gui/logs/
+      - ../../volume:/corpus
 
   nginx:
       build: 
@@ -23,7 +24,6 @@ services:
         - "80:80"
       depends_on:
         - dep_search
-        #- dep_search_old
       networks:
         - net
 

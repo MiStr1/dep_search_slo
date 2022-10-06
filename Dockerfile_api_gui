@@ -6,10 +6,6 @@ RUN mkhomedir_helper uwsgi
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY SSJ api_gui/SSJ
-COPY SST api_gui/SST
-COPY ccKres api_gui/ccKres
-
 COPY setup.py .
 COPY dep_search dep_search
 RUN pip install -e .

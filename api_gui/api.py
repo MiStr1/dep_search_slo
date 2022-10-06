@@ -617,7 +617,7 @@ def get_db_langs(dbs):
     print (fdbs)
     xx = []
     for db in dbs:
-        inf = open('/api_gui' + fdbs[db][8:] + '/langs', 'rt')
+        inf = open('/corpus/' + fdbs[db][8:] + '/langs', 'rt')
         for ln in inf:
             xx.append(ln.strip())
 
@@ -1031,7 +1031,7 @@ def get_xtrees(ticket, lang, start, end):
         dbs = get_flat_dbs()
 
         for dib in db.split(','):
-            inf = open('/api_gui/' + dbs[dib][8:] + '/langs', 'rt')
+            inf = open('/corpus/' + dbs[dib][8:] + '/langs', 'rt')
             xx = []
             for ln in inf:
                 xx.append(ln.strip())
@@ -1084,7 +1084,7 @@ def get_xtrees_en(ticket, lang, start, end):
         dbs = get_flat_dbs()
 
         for dib in db.split(','):
-            inf = open('/api_gui/' + dbs[dib][8:] + '/langs', 'rt')
+            inf = open('/corpus/' + dbs[dib][8:] + '/langs', 'rt')
             xx = []
             for ln in inf:
                 xx.append(ln.strip())
