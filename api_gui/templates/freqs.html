@@ -26,10 +26,10 @@
         <h2>{{ xx }}</h2>
 <div style="border: 1px outset black;width: 500px;">
 
-        {{ xx }}_število : {{ ret[1][ xx + "_število"] }}<br><br>
+        {{ xx }}_število : {{ ret[1][ xx + "- skupno"] }}<br><br>
         {% if ret[1][xx + "_najbolj_pogosto"]|length > 0 %}
             <h3>Top 10</h3>
-                {% for k, v in ret[1][xx + "_najbolj_pogosto"] %}
+                {% for k, v in ret[1][xx + "- najbolj pogosto"] %}
                     {{ k }} : {{ v }} <br>
                 {% endfor %}
         {% endif %}
