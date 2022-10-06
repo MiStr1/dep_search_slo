@@ -13,12 +13,7 @@ Run the` build_index.py` script in the root of the project for every conllu file
 ```sh
 cat <location_of_conllu_file> | python3 build_index.py --lang sl --d <name_of_db>
 ```
-
-Add db to the dockerfile `Dockerfile_api_gui`:
-
-```
-COPY <name_of_db> api_gui/<name_of_db>
-```
+Copy generated folder to the corpus folder.
 
 Add description for the db in the `api_gui/db_desc.json` if needed:
 
