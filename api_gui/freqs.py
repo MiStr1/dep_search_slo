@@ -231,9 +231,9 @@ def get_freqs(f, eng=True):
             xx[kk + '_count'] = len(freqs[kk])
         else:
             #Counter
-            xx[translate_to_slo[kk] + '- najbolj pogosto'] = Counter(freqs[kk]).most_common(10)
+            xx[translate_to_slo[kk] + '_pogosto'] = Counter(freqs[kk]).most_common(10)
             #All
-            xx[translate_to_slo[kk] + '- skupno'] = len(freqs[kk])
+            xx[translate_to_slo[kk] + '_skupno'] = len(freqs[kk])
     if eng:
         return [{'hits': freqs['hits'], 'trees': freqs['trees'], 'all_tokens': freqs['tokens'], 'docs': len(freqs['docs']), 'uniq_lemmas': len(freqs['lemmas']), 'uniq_wordforms': len(freqs['wfs'])}, xx]
     else:
