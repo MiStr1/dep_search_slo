@@ -5,18 +5,18 @@ from collections import defaultdict
 from collections import Counter
 
 translate_to_slo = {
-    "dependent_words": "odvisne_besede",
-    "dependent_lemmas": "odvisne_leme",
-    "right_words": "desne_besede",
-    "right_lemmas": "desne_leme",
-    "parent_words": "starševske_besede",
-    "parent_lemmas": "starševske_leme",
-    "deptypes_as_dependent": "odvistnostni_tipi_kot_otrok",
-    "deptypes_as_parent": "odvistnostni_tipi_kot_starš",
-    "hit_words": "najdene_besede",
-    "hit_lemmas": "najdene_leme",
-    "left_words": "leve_besede",
-    "left_lemmas": "leve_leme"
+    "dependent_words": "Podrejene besede",
+    "dependent_lemmas": "Podrejene leme",
+    "right_words": "Besede na desni",
+    "right_lemmas": "Leme na desni",
+    "parent_words": "Nadrejene besede",
+    "parent_lemmas": "Nadrejene leme",
+    "deptypes_as_dependent": "Relacije v vlogi podrejenega elementa",
+    "deptypes_as_parent": "Relacije v vlogi nadrejenega elementa",
+    "hit_words": "Oblike besed",
+    "hit_lemmas": "Oblike lem",
+    "left_words": "Besede na levi",
+    "left_lemmas": "Leme na levi"
 }
 
 def yield_kwics(f, n):
@@ -231,13 +231,13 @@ def get_freqs(f, eng=True):
             xx[kk + '_count'] = len(freqs[kk])
         else:
             #Counter
-            xx[translate_to_slo[kk] + '_najbolj_pogosto'] = Counter(freqs[kk]).most_common(10)
+            xx[translate_to_slo[kk] + '- najbolj pogosto'] = Counter(freqs[kk]).most_common(10)
             #All
-            xx[translate_to_slo[kk] + '_število'] = len(freqs[kk])
+            xx[translate_to_slo[kk] + '- skupno'] = len(freqs[kk])
     if eng:
         return [{'hits': freqs['hits'], 'trees': freqs['trees'], 'all_tokens': freqs['tokens'], 'docs': len(freqs['docs']), 'uniq_lemmas': len(freqs['lemmas']), 'uniq_wordforms': len(freqs['wfs'])}, xx]
     else:
-        return [{'zadetki': freqs['hits'], 'drevesa': freqs['trees'], 'vse_pojavnice': freqs['tokens'], 'dokumenti': len(freqs['docs']), 'unikatne_leme': len(freqs['lemmas']), 'unikatne_besede': len(freqs['wfs'])}, xx]
+        return [{'Zadetki': freqs['hits'], 'Drevesa': freqs['trees'], 'Vse pojavnice': freqs['tokens'], 'Dokumenti': len(freqs['docs']), 'Različnice lem': len(freqs['lemmas']), 'Različnice besed': len(freqs['wfs'])}, xx]
 
         
 
