@@ -740,7 +740,7 @@ def kdll(ticket, lang):
 def ffr(ticket):
 
     ret = get_freqs(res_file('*_' + ticket + '*.conllu'), eng=False)
-    relx = ["odvisne_besede", "odvisne_leme", "leve_besede", "leve_leme", "desne_besede", "desne_leme", "starševske_besede", "starševske_leme", "odvistnostni_tipi_kot_otrok", "odvistnostni_tipi_kot_starš", "najdene_besede", "najdene_leme"]
+    relx = ["Podrejene besede", "Podrejene leme", "Besede na levi", "Leme na levi", "Besede na desni", "Leme na desni", "Nadrejene besede", "Nadrejene leme", "Relacije v vlogi podrejenega elementa", "Relacije v vlogi nadrejenega elementa", "Oblike besed", "Oblike lem"]
     return render_template('freqs.html', ret=ret, relx=relx, xurl="/drevesnik/json_freqs/" + ticket)
 
  

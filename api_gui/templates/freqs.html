@@ -26,7 +26,7 @@
         <h2>{{ xx }}</h2>
 <div style="border: 1px outset black;width: 500px;">
 
-        {{ xx }}_skupno : {{ ret[1][ xx + "_skupno"] }}<br><br>
+        {{ xx }}- skupno : {{ ret[1][ xx + "_skupno"] }}<br><br>
         {% if ret[1][xx + "_pogosto"]|length > 0 %}
             <h3>Top 10</h3>
                 {% for k, v in ret[1][xx + "_pogosto"] %}
