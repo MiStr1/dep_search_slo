@@ -199,6 +199,9 @@ $( document ).ready(function() {
 	
 		new_html = ""
 		first = true;
+		data.sort(function (a,b) {
+			return a.text < b.text ? -1 : 1;
+		});
 		for (const item of data) {
 			new_html += '<input type="checkbox" id="' + item.id + '" name="' + item.id +'"';
 			if (first) {
