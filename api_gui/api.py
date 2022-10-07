@@ -24,6 +24,7 @@ from copy import deepcopy
 from functools import partial
 import markdown
 import threading
+from time import sleep
 
 
 main_page_called = 0
@@ -683,6 +684,7 @@ def start_query_for_cache(cached_calls):
                 p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand, False))
                 p.start()
                 cache_file.write(ticket + "\n")
+                sleep(4)
 
 
 start_query_for_cache("cache_calls.txt")
