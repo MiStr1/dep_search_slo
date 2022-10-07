@@ -41,7 +41,7 @@ Parameters:
 * **Case**: Value true if you want case insensitive search otherwise value false.
 * **Random**: Value true for random hits otherwise false
 * **Short sentence search** Value true for hits with sentences with 15 or fewer tokens otherwise false.
-* **Ticket**: Name of the ticket where the query will be saved (important for the URL where query results will appear).
+* **Ticket**: Name of the ticket where the query will be saved (important for the URL where query results will appear) (should not contain `.`,`/`,`_`).
 
 
 Each of these queries can then be accessed at http://localhost/drevesnik/show/Ticket/Language/0/10.
