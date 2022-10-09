@@ -19,12 +19,10 @@ for f in glob.glob('./res/*'):
     tmp_f = f[5:]
     print(tmp_f)
     skip = False
-    name = tmp_f[:tmp_f.rfind(".")].split("_")[-2]:
-    if name in skip_cleaning:
-        skip = True
-        break
+    for name in tmp_f[:tmp_f.rfind(".")].split("_"):
+        if name.replace("/","") in skip_cleaning:
+            skip = True
+            break
     if not skip and os.stat(f).st_mtime < limit:
         print("cleaned",  tmp_f)
         os.remove(f)
-
-
