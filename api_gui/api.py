@@ -684,7 +684,9 @@ def start_query_for_cache(cached_calls):
                 p = Process(target=query_process, args=(dbs,query, langs, ticket, limit, case, rand, False))
                 p.start()
                 cache_file.write(ticket + "\n")
-                time.sleep(2)
+
+
+start_query_for_cache("cache_calls.txt")
 
 
 @app.route("/drevesnik/download/<ticket>")
